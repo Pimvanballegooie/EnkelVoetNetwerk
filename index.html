@@ -103,6 +103,40 @@
       color: var(--color-primary);
     }
 
+    .section-title.small {
+      font-size: 1.3rem;
+      margin-top: 2.5rem;
+    }
+
+    /* VIEWER VOOR GOOGLE DOCS */
+    .viewer {
+      margin-top: 2.5rem;
+      background: var(--color-card);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(106,142,121,0.25);
+    }
+
+    .viewer-placeholder {
+      font-size: 0.95rem;
+      color: var(--color-muted);
+      margin: 0;
+    }
+
+    .viewer-frame-wrapper {
+      margin-top: 1rem;
+      display: none; /* wordt zichtbaar zodra een document gekozen is */
+    }
+
+    .viewer-frame-wrapper iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 16px;
+      background: #f9fafb;
+    }
+
     /* ACCORDIONS */
     details {
       background: var(--color-card);
@@ -115,29 +149,50 @@
 
     summary {
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      list-style: none;
     }
 
     summary::-webkit-details-marker {
       display: none;
     }
 
+    summary::after {
+      content: "+";
+      font-size: 1.4rem;
+      color: var(--color-primary);
+      margin-left: 1rem;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    summary:hover {
+      color: var(--color-primary);
+    }
+
     .accordion-content {
       margin-top: 1rem;
       padding-top: 1rem;
-      border-top: 1px dashed rgba(0,0,0,0.15);
+      border-top: 1px dashed rgba(0,0,0,0.12);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
+      font-size: 0.95rem;
     }
 
     th, td {
       padding: 0.7rem;
       border-bottom: 1px solid #d5ddd9;
+      text-align: left;
     }
 
     th {
@@ -148,10 +203,33 @@
       color: var(--color-muted);
     }
 
-    td a {
-      color: var(--color-primary);
+    /* KNOP-STIJL VOOR LINKS */
+    .doc-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: var(--color-primary);
+      color: #ffffff;
       text-decoration: none;
       font-weight: 500;
+      font-size: 0.85rem;
+      border: 1px solid rgba(47,62,54,0.12);
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      white-space: nowrap;
+    }
+
+    .doc-link:hover {
+      background: #587565;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .doc-link:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     footer {
@@ -169,7 +247,8 @@
 <header>
   <div class="nav-inner">
     <div class="logo">
-      <img src="/mnt/data/logo.png" alt="Enkel Voet Netwerk logo" />
+      <!-- Logo-bestand moet in dezelfde map staan als index.html -->
+      <img src="logo.png" alt="Enkel Voet Netwerk logo" />
     </div>
   </div>
 </header>
@@ -202,6 +281,17 @@
 
   <h2 class="section-title">Behandelprotocollen per regio van de voet</h2>
 
+  <!-- VIEWER-SECTIE VOOR GOOGLE DOCS -->
+  <section class="viewer">
+    <h2 class="section-title small">Geselecteerd protocol</h2>
+    <p class="viewer-placeholder">
+      Kies een protocol in de tabellen hieronder. Het document wordt hier in de pagina getoond.
+    </p>
+    <div class="viewer-frame-wrapper">
+      <iframe id="docViewer" src="" title="Protocol viewer" loading="lazy"></iframe>
+    </div>
+  </section>
+
   <!-- ENKEL -->
   <details>
     <summary>Enkel</summary>
@@ -223,9 +313,38 @@
         <tbody>
           <tr>
             <td>Re-insertie buitenste enkelpees</td>
-            <td><a href="docs/enkel_reinsertie_makkelijk.docx">Download</a></td>
-            <td><a href="docs/enkel_reinsertie_normaal.docx">Download</a></td>
-            <td><a href="docs/enkel_reinsertie_moeilijk.docx">Download</a></td>
+            <!--
+              Vervang de ID's hieronder door de Google Docs-document ID's.
+              Gebruik bij voorkeur de /preview-link van Google Docs en zet de deel-instelling op:
+              "Iedereen met de link mag bekijken".
+            -->
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_MAKKELIJK/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_MAKKELIJK/preview"
+              >
+                Open
+              </a>
+            </td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_NORMAAL/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_NORMAAL/preview"
+              >
+                Open
+              </a>
+            </td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_MOEILIJK/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_MOEILIJK/preview"
+              >
+                Open
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -252,9 +371,33 @@
         <tbody>
           <tr>
             <td>Voorbeeldprotocol achtervoet</td>
-            <td><a href="#">Download</a></td>
-            <td><a href="#">Download</a></td>
-            <td><a href="#">Download</a></td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_ACHTERVOET_M/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_ACHTERVOET_M/preview"
+              >
+                Open
+              </a>
+            </td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_ACHTERVOET_L/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_ACHTERVOET_L/preview"
+              >
+                Open
+              </a>
+            </td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_ACHTERVOET_Z/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_ACHTERVOET_Z/preview"
+              >
+                Open
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -268,7 +411,6 @@
       <p>
         De middenvoet zorgt voor stevigheid en afrollen van de voet tijdens het lopen.
       </p>
-
       <table>
         <thead>
           <tr>
@@ -282,9 +424,33 @@
         <tbody>
           <tr>
             <td>Voorbeeldprotocol middenvoet</td>
-            <td><a href="#">Download</a></td>
-            <td><a href="#">Download</a></td>
-            <td><a href="#">Download</a></td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_MIDDENVOET_M/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_MIDDENVOET_M/preview"
+              >
+                Open
+              </a>
+            </td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_MIDDENVOET_L/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_MIDDENVOET_L/preview"
+              >
+                Open
+              </a>
+            </td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_MIDDENVOET_Z/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_MIDDENVOET_Z/preview"
+              >
+                Open
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -298,7 +464,6 @@
       <p>
         De voorvoet bestaat uit de middenvoetsbeentjes en tenen, belangrijk voor balans en afzet.
       </p>
-
       <table>
         <thead>
           <tr>
@@ -312,9 +477,33 @@
         <tbody>
           <tr>
             <td>Voorbeeldprotocol voorvoet</td>
-            <td><a href="#">Download</a></td>
-            <td><a href="#">Download</a></td>
-            <td><a href="#">Download</a></td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_VOORVOET_M/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_VOORVOET_M/preview"
+              >
+                Open
+              </a>
+            </td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_VOORVOET_L/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_VOORVOET_L/preview"
+              >
+                Open
+              </a>
+            </td>
+            <td>
+              <a
+                class="doc-link"
+                href="https://docs.google.com/document/d/ID_VOORVOET_Z/preview"
+                data-doc-url="https://docs.google.com/document/d/ID_VOORVOET_Z/preview"
+              >
+                Open
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -326,6 +515,31 @@
 <footer>
   Enkel Voet Netwerk Breda e.o. – samenwerking voor hoogwaardige enkel- en voetzorg.
 </footer>
+
+<script>
+  // Zorg dat klikken op een protocol-link het document in de viewer toont
+  (function () {
+    const viewer = document.getElementById('docViewer');
+    const placeholder = document.querySelector('.viewer-placeholder');
+    const frameWrapper = document.querySelector('.viewer-frame-wrapper');
+
+    if (!viewer) return;
+
+    const links = document.querySelectorAll('a.doc-link[data-doc-url]');
+
+    links.forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const url = this.getAttribute('data-doc-url');
+        if (!url || url === '#') return;
+
+        viewer.src = url;
+        if (placeholder) placeholder.style.display = 'none';
+        if (frameWrapper) frameWrapper.style.display = 'block';
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>

@@ -39,13 +39,13 @@
     .nav-inner {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 1rem 1.25rem;
+      padding: 0.5rem 1rem; /* HELFT VAN DE HOOGTE */
       display: flex;
       align-items: center;
     }
 
     .logo img {
-      width: 260px;
+      width: 175px; /* 1/3 KLEINER */
       height: auto;
     }
 
@@ -126,7 +126,7 @@
 
     .viewer-frame-wrapper {
       margin-top: 1rem;
-      display: none; /* wordt zichtbaar zodra een document gekozen is */
+      display: none;
     }
 
     .viewer-frame-wrapper iframe {
@@ -203,7 +203,7 @@
       color: var(--color-muted);
     }
 
-    /* KNOP-STIJL VOOR LINKS */
+    /* KNOP-STIJL */
     .doc-link {
       display: inline-flex;
       align-items: center;
@@ -247,7 +247,6 @@
 <header>
   <div class="nav-inner">
     <div class="logo">
-      <!-- Logo-bestand moet in dezelfde map staan als index.html -->
       <img src="logo.png" alt="Enkel Voet Netwerk logo" />
     </div>
   </div>
@@ -260,14 +259,12 @@
 
     <p>
       Het Enkel Voet Netwerk Breda e.o. is een netwerk dat staat voor samenwerking in de regio én
-      hoogwaardige, eenduidige begeleiding. Samen met belangrijke partners in Breda en omstreken
-      geven wij onze zorg vorm.
+      hoogwaardige, eenduidige begeleiding.
     </p>
 
     <p>
       Transparantie, samenwerking, eenduidig beleid en aandacht voor gezondheidsvaardigheden
-      zorgen voor betere, duidelijkere begeleiding van onze cliënten. Daarom zijn al onze
-      behandelprotocollen vrij toegankelijk.
+      zorgen voor betere begeleiding van cliënten.
     </p>
 
     <p>Alle protocollen zijn beschikbaar in drie niveaus:</p>
@@ -281,11 +278,11 @@
 
   <h2 class="section-title">Behandelprotocollen per regio van de voet</h2>
 
-  <!-- VIEWER-SECTIE VOOR GOOGLE DOCS -->
+  <!-- VIEWER -->
   <section class="viewer">
     <h2 class="section-title small">Geselecteerd protocol</h2>
     <p class="viewer-placeholder">
-      Kies een protocol in de tabellen hieronder. Het document wordt hier in de pagina getoond.
+      Kies een protocol hieronder. Het document verschijnt hier.
     </p>
     <div class="viewer-frame-wrapper">
       <iframe id="docViewer" src="" title="Protocol viewer" loading="lazy"></iframe>
@@ -296,9 +293,7 @@
   <details>
     <summary>Enkel</summary>
     <div class="accordion-content">
-      <p>
-        De enkel verbindt je onderbeen en voet. Het gewricht is belangrijk voor lopen, stabiliteit en dagelijks functioneren.
-      </p>
+      <p>De enkel verbindt je onderbeen en voet.</p>
 
       <table>
         <thead>
@@ -313,38 +308,9 @@
         <tbody>
           <tr>
             <td>Re-insertie buitenste enkelpees</td>
-            <!--
-              Vervang de ID's hieronder door de Google Docs-document ID's.
-              Gebruik bij voorkeur de /preview-link van Google Docs en zet de deel-instelling op:
-              "Iedereen met de link mag bekijken".
-            -->
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_MAKKELIJK/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_MAKKELIJK/preview"
-              >
-                Open
-              </a>
-            </td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_NORMAAL/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_NORMAAL/preview"
-              >
-                Open
-              </a>
-            </td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_MOEILIJK/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_MOEILIJK/preview"
-              >
-                Open
-              </a>
-            </td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
           </tr>
         </tbody>
       </table>
@@ -355,9 +321,8 @@
   <details>
     <summary>Achtervoet</summary>
     <div class="accordion-content">
-      <p>
-        De achtervoet bestaat uit het hielbeen en sprongbeen. Deze dragen veel gewicht en dempen schokken tijdens het lopen.
-      </p>
+      <p>De achtervoet bestaat uit het hielbeen en sprongbeen.</p>
+
       <table>
         <thead>
           <tr>
@@ -371,33 +336,9 @@
         <tbody>
           <tr>
             <td>Voorbeeldprotocol achtervoet</td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_ACHTERVOET_M/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_ACHTERVOET_M/preview"
-              >
-                Open
-              </a>
-            </td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_ACHTERVOET_L/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_ACHTERVOET_L/preview"
-              >
-                Open
-              </a>
-            </td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_ACHTERVOET_Z/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_ACHTERVOET_Z/preview"
-              >
-                Open
-              </a>
-            </td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
           </tr>
         </tbody>
       </table>
@@ -408,9 +349,8 @@
   <details>
     <summary>Middenvoet</summary>
     <div class="accordion-content">
-      <p>
-        De middenvoet zorgt voor stevigheid en afrollen van de voet tijdens het lopen.
-      </p>
+      <p>De middenvoet zorgt voor stabiliteit en afrollen.</p>
+
       <table>
         <thead>
           <tr>
@@ -424,33 +364,9 @@
         <tbody>
           <tr>
             <td>Voorbeeldprotocol middenvoet</td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_MIDDENVOET_M/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_MIDDENVOET_M/preview"
-              >
-                Open
-              </a>
-            </td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_MIDDENVOET_L/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_MIDDENVOET_L/preview"
-              >
-                Open
-              </a>
-            </td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_MIDDENVOET_Z/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_MIDDENVOET_Z/preview"
-              >
-                Open
-              </a>
-            </td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
           </tr>
         </tbody>
       </table>
@@ -461,9 +377,8 @@
   <details>
     <summary>Voorvoet</summary>
     <div class="accordion-content">
-      <p>
-        De voorvoet bestaat uit de middenvoetsbeentjes en tenen, belangrijk voor balans en afzet.
-      </p>
+      <p>De voorvoet stuurt balans en afzet.</p>
+
       <table>
         <thead>
           <tr>
@@ -477,33 +392,9 @@
         <tbody>
           <tr>
             <td>Voorbeeldprotocol voorvoet</td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_VOORVOET_M/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_VOORVOET_M/preview"
-              >
-                Open
-              </a>
-            </td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_VOORVOET_L/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_VOORVOET_L/preview"
-              >
-                Open
-              </a>
-            </td>
-            <td>
-              <a
-                class="doc-link"
-                href="https://docs.google.com/document/d/ID_VOORVOET_Z/preview"
-                data-doc-url="https://docs.google.com/document/d/ID_VOORVOET_Z/preview"
-              >
-                Open
-              </a>
-            </td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
           </tr>
         </tbody>
       </table>
@@ -517,13 +408,10 @@
 </footer>
 
 <script>
-  // Zorg dat klikken op een protocol-link het document in de viewer toont
   (function () {
     const viewer = document.getElementById('docViewer');
     const placeholder = document.querySelector('.viewer-placeholder');
     const frameWrapper = document.querySelector('.viewer-frame-wrapper');
-
-    if (!viewer) return;
 
     const links = document.querySelectorAll('a.doc-link[data-doc-url]');
 
@@ -534,8 +422,8 @@
         if (!url || url === '#') return;
 
         viewer.src = url;
-        if (placeholder) placeholder.style.display = 'none';
-        if (frameWrapper) frameWrapper.style.display = 'block';
+        placeholder.style.display = 'none';
+        frameWrapper.style.display = 'block';
       });
     });
   })();

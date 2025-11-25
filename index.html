@@ -4,10 +4,6 @@
   <meta charset="UTF-8" />
   <title>Enkel Voet Netwerk Breda e.o.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Enkel Voet Netwerk Breda e.o. – samenwerking in de regio en eenduidige, hoogwaardige begeleiding bij enkel- en voetproblematiek."
-  />
 
   <style>
     :root {
@@ -26,36 +22,37 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, sans-serif;
       background: radial-gradient(circle at top left, #e5eff7, #f9fafb);
       color: var(--color-text);
-      line-height: 1.6;
     }
 
+    /* HEADER */
     header {
       background: rgba(255,255,255,0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(51,120,166,0.15);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
     .nav-inner {
-      max-width: 1050px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 0.75rem 1.25rem;
+      padding: 1rem 1.25rem;
       display: flex;
       align-items: center;
     }
 
     .logo img {
-      width: 125px;
+      width: 220px; /* optimale breedte */
       height: auto;
     }
 
+    /* MAIN CONTENT */
     main {
-      max-width: 1050px;
+      max-width: 1100px;
       margin: 2rem auto 3rem;
       padding: 0 1.25rem;
     }
@@ -67,58 +64,60 @@
         rgba(166,50,119,0.06)
       );
       border-radius: 24px;
-      padding: 2rem 2rem;
+      padding: 2.3rem;
       box-shadow: var(--shadow-soft);
     }
 
     .hero h1 {
       margin-top: 0;
-      font-size: 2rem;
+      font-size: 2.2rem;
       color: var(--color-primary);
+      line-height: 1.3;
     }
 
     .hero p {
-      font-size: 1rem;
+      font-size: 1.05rem;
       margin-bottom: 1rem;
     }
 
     .pill-row {
       display: flex;
+      gap: 0.6rem;
       flex-wrap: wrap;
-      gap: 0.5rem;
       margin-top: 1rem;
     }
 
     .pill {
       font-size: 0.85rem;
-      padding: 0.4rem 0.75rem;
+      padding: 0.45rem 0.9rem;
       border-radius: 999px;
-      background: rgba(51,120,166,0.15);
+      background: rgba(51,120,166,0.12);
+      border: 1px solid rgba(51,120,166,0.2);
       color: var(--color-muted);
-      border: 1px solid rgba(51,120,166,0.25);
     }
 
     .section-title {
-      margin-top: 2.5rem;
+      margin-top: 3rem;
       margin-bottom: 1rem;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      font-weight: 700;
       color: var(--color-primary);
     }
 
-    /* Accordion */
+    /* ACCORDIONS */
     details {
       background: var(--color-card);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-soft);
-      padding: 1rem 1.25rem;
+      padding: 1.2rem 1.4rem;
       border: 1px solid rgba(51,120,166,0.15);
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     summary {
       cursor: pointer;
+      font-size: 1.2rem;
       font-weight: 600;
-      font-size: 1.1rem;
     }
 
     summary::-webkit-details-marker {
@@ -131,7 +130,6 @@
       border-top: 1px dashed rgba(0,0,0,0.15);
     }
 
-    /* Table */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -139,33 +137,31 @@
     }
 
     th, td {
-      padding: 0.6rem;
+      padding: 0.7rem;
       border-bottom: 1px solid #e5e7eb;
     }
 
     th {
-      background: rgba(51,120,166,0.08);
-      font-size: 0.75rem;
+      background: rgba(51,120,166,0.1);
       text-transform: uppercase;
-      letter-spacing: 0.07em;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
       color: var(--color-muted);
     }
 
     td a {
       color: var(--color-primary);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-weight: 500;
     }
 
     footer {
-      max-width: 1050px;
-      margin: 2rem auto;
-      padding: 0 1.25rem;
-      font-size: 0.85rem;
-      color: var(--color-muted);
+      max-width: 1100px;
+      margin: 3rem auto 2rem;
       text-align: center;
+      font-size: 0.9rem;
+      color: var(--color-muted);
     }
-
   </style>
 </head>
 
@@ -174,26 +170,29 @@
 <header>
   <div class="nav-inner">
     <div class="logo">
-      <img src="logo.png" alt="Enkel Voet Netwerk logo">
+      <img src="logo.png" alt="Enkel Voet Netwerk logo" />
     </div>
   </div>
 </header>
 
 <main>
-  <!-- HERO -->
+
   <section class="hero">
     <h1>Enkel Voet Netwerk Breda e.o.</h1>
+
     <p>
-      Het Enkel Voet Netwerk Breda e.o. is een netwerk voor samenwerking in de regio én
-      hoogwaardige, eenduidige begeleiding. We werken samen met belangrijke partners in
-      Breda en omstreken om de best mogelijke zorg te bieden.
+      Het Enkel Voet Netwerk Breda e.o. is een netwerk dat staat voor samenwerking in de regio én
+      hoogwaardige, eenduidige begeleiding. Samen met belangrijke partners in Breda en omstreken
+      geven wij onze zorg vorm.
     </p>
+
     <p>
-      Door samenwerking, transparantie, eenduidig beleid en aandacht voor gezondheidsvaardigheden
-      willen we betere begeleiding bieden aan onze cliënten. Op deze website zijn al onze
+      Transparantie, samenwerking, eenduidig beleid en aandacht voor gezondheidsvaardigheden
+      zorgen voor betere, duidelijkere begeleiding van onze cliënten. Daarom zijn al onze
       behandelprotocollen vrij toegankelijk.
     </p>
-    <p>Elk protocol is beschikbaar in drie leesniveaus:</p>
+
+    <p>Alle protocollen zijn beschikbaar in drie niveaus:</p>
 
     <div class="pill-row">
       <div class="pill">1. Makkelijk te lezen</div>
@@ -202,16 +201,14 @@
     </div>
   </section>
 
-  <!-- SECTION TITLE -->
   <h2 class="section-title">Behandelprotocollen per regio van de voet</h2>
 
-  <!-- ACCORDION ENKEL -->
+  <!-- ENKEL -->
   <details>
     <summary>Enkel</summary>
     <div class="accordion-content">
       <p>
-        De enkel verbindt het onderbeen met de voet. Het gewricht maakt het mogelijk om de voet
-        omhoog en omlaag te bewegen en speelt een belangrijke rol in stabiliteit.
+        De enkel verbindt je onderbeen en voet. Het gewricht is belangrijk voor lopen, stabiliteit en dagelijks functioneren.
       </p>
 
       <table>
@@ -223,6 +220,7 @@
             <th>Moeilijk</th>
           </tr>
         </thead>
+
         <tbody>
           <tr>
             <td>Re-insertie buitenste enkelpees</td>
@@ -235,13 +233,12 @@
     </div>
   </details>
 
-  <!-- ACCORDION ACHTERVOET -->
+  <!-- ACHTERVOET -->
   <details>
     <summary>Achtervoet</summary>
     <div class="accordion-content">
       <p>
-        De achtervoet bestaat uit het hielbeen en het sprongbeen. Deze delen dragen veel gewicht 
-        en zorgen voor schokdemping.
+        De achtervoet bestaat uit het hielbeen en sprongbeen. Deze dragen veel gewicht en dempen schokken tijdens het lopen.
       </p>
       <table>
         <thead>
@@ -252,9 +249,10 @@
             <th>Moeilijk</th>
           </tr>
         </thead>
+
         <tbody>
           <tr>
-            <td>Voorbeeldprocedure achtervoet</td>
+            <td>Voorbeeldprotocol achtervoet</td>
             <td><a href="#">Download</a></td>
             <td><a href="#">Download</a></td>
             <td><a href="#">Download</a></td>
@@ -264,13 +262,12 @@
     </div>
   </details>
 
-  <!-- ACCORDION MIDDENVOET -->
+  <!-- MIDDENVOET -->
   <details>
     <summary>Middenvoet</summary>
     <div class="accordion-content">
       <p>
-        De middenvoet bestaat uit meerdere kleine botten die zorgen voor stevigheid en afwikkeling 
-        tijdens het lopen.
+        De middenvoet zorgt voor stevigheid en afrollen van de voet tijdens het lopen.
       </p>
       <table>
         <thead>
@@ -281,9 +278,10 @@
             <th>Moeilijk</th>
           </tr>
         </thead>
+
         <tbody>
           <tr>
-            <td>Voorbeeldprocedure middenvoet</td>
+            <td>Voorbeeldprotocol middenvoet</td>
             <td><a href="#">Download</a></td>
             <td><a href="#">Download</a></td>
             <td><a href="#">Download</a></td>
@@ -293,13 +291,12 @@
     </div>
   </details>
 
-  <!-- ACCORDION VOORVOET -->
+  <!-- VOORVOET -->
   <details>
     <summary>Voorvoet</summary>
     <div class="accordion-content">
       <p>
-        De voorvoet bestaat uit de middenvoetsbeentjes en tenen. Zij spelen een belangrijke rol 
-        bij balans en voortbeweging.
+        De voorvoet bestaat uit de middenvoetsbeentjes en tenen, belangrijk voor balans en afzet.
       </p>
       <table>
         <thead>
@@ -310,9 +307,10 @@
             <th>Moeilijk</th>
           </tr>
         </thead>
+
         <tbody>
           <tr>
-            <td>Voorbeeldprocedure voorvoet</td>
+            <td>Voorbeeldprotocol voorvoet</td>
             <td><a href="#">Download</a></td>
             <td><a href="#">Download</a></td>
             <td><a href="#">Download</a></td>
@@ -325,7 +323,7 @@
 </main>
 
 <footer>
-  Enkel Voet Netwerk Breda e.o. – samenwerking voor hoogwaardige voet- en enkelzorg.  
+  Enkel Voet Netwerk Breda e.o. – samenwerking voor hoogwaardige enkel- en voetzorg.
 </footer>
 
 </body>

@@ -47,6 +47,13 @@ header.header-scrolled {
   width: 100%;
 }
 
+/* Zorgen dat ankers niet achter de vaste header verdwijnen */
+#top,
+#protocollen,
+#locaties {
+  scroll-margin-top: 110px; /* eventueel spelen met 90–130px */
+}
+
 /* LOGO */
 .logo {
   width: 100%;

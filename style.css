@@ -1,518 +1,185 @@
-:root {
-  --color-primary: #6A8E79;
-  --color-accent: #A8C3A4;
-  --color-bg: #E7EFEA;
-  --color-card: #ffffff;
-  --color-text: #2F3E36;
-  --color-muted: #6f7c75;
+// HEADER SCROLL + MOBIELE NAV
+(function () {
+  const header = document.querySelector('header');
+  const navToggle = document.querySelector('.nav-toggle');
+  const mainNav = document.querySelector('.main-nav');
 
-  --radius-lg: 16px;
-  --shadow-soft: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-/* BASIS */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, sans-serif;
-  background: radial-gradient(circle at top left, #f1f6f3, var(--color-bg));
-  color: var(--color-text);
-  scroll-behavior: smooth;
-}
-
-/* HEADER */
-header {
-  background: rgba(255,255,255,0.96);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(106,142,121,0.25);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
-
-header.header-scrolled {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  border-color: rgba(106,142,121,0.35);
-}
-
-.nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0.35rem 1rem 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-/* LOGO */
-.logo {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.logo img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* HAMBURGER KNOP (mobiel) */
-.nav-toggle {
-  display: none; /* desktop: verborgen */
-  border: none;
-  background: transparent;
-  padding: 0.25rem;
-  margin-top: 0.2rem;
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.nav-toggle span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  border-radius: 999px;
-  background: var(--color-text);
-  margin: 3px 0;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-/* Animatie bij openen menu */
-.nav-toggle.nav-toggle-open span:nth-child(1) {
-  transform: translateY(5px) rotate(45deg);
-}
-
-.nav-toggle.nav-toggle-open span:nth-child(2) {
-  opacity: 0;
-}
-
-.nav-toggle.nav-toggle-open span:nth-child(3) {
-  transform: translateY(-5px) rotate(-45deg);
-}
-
-/* NAVIGATIE */
-.main-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.main-nav-centered {
-  width: 100%;
-  justify-content: center;
-}
-
-/* Menu-knoppen */
-.nav-link {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(106,142,121,0.25);
-  background: rgba(106,142,121,0.06);
-  font-size: 0.9rem;
-  color: var(--color-text);
-  text-decoration: none;
-  white-space: nowrap;
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    transform 0.1s ease,
-    box-shadow 0.15s ease,
-    color 0.15s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-/* Hover-lijntje onder de tekst */
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0.8rem;
-  right: 0.8rem;
-  bottom: 0.25rem;
-  height: 2px;
-  border-radius: 999px;
-  background: var(--color-primary);
-  transform: scaleX(0);
-  transform-origin: center;
-  opacity: 0;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.nav-link:hover::after {
-  transform: scaleX(1);
-  opacity: 1;
-}
-
-.nav-link:hover {
-  background: rgba(106,142,121,0.14);
-  border-color: rgba(106,142,121,0.5);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-}
-
-/* Accent-knop: Locatie worden */
-.nav-link-accent {
-  background: var(--color-primary);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 3px 9px rgba(0,0,0,0.15);
-}
-
-.nav-link-accent::after {
-  background: #ffffff;
-}
-
-.nav-link-accent:hover {
-  background: #587565;
-  box-shadow: 0 5px 16px rgba(0,0,0,0.18);
-}
-
-/* Iconen in menu */
-.nav-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-icon svg {
-  width: 16px;
-  height: 16px;
-  fill: currentColor;
-}
-
-/* RESPONSIVE NAV */
-@media (max-width: 768px) {
-  .nav-inner {
-    align-items: stretch;
+  // Schaduw bij scroll
+  if (header) {
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 0) {
+        header.classList.add('header-scrolled');
+      } else {
+        header.classList.remove('header-scrolled');
+      }
+    });
   }
 
-  .logo {
-    order: 1;
+  // Hamburger-menu openen/sluiten
+  if (navToggle && mainNav) {
+    navToggle.addEventListener('click', function () {
+      mainNav.classList.toggle('nav-open');
+      navToggle.classList.toggle('nav-toggle-open');
+    });
+  }
+})();
+
+// GOOGLE DOC VIEWER + SLUITKNOP
+(function () {
+  const viewer = document.getElementById('docViewer');
+  const placeholder = document.querySelector('.viewer-placeholder');
+  const frameWrapper = document.querySelector('.viewer-frame-wrapper');
+  const closeButton = document.getElementById('closeProtocolButton');
+
+  const links = document.querySelectorAll('a.doc-link[data-doc-url]');
+
+  // Protocol openen
+  links.forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const url = this.getAttribute('data-doc-url');
+      if (!url || url === '#') return;
+
+      viewer.src = url;
+      frameWrapper.style.display = 'block';
+      placeholder.style.display = 'none';
+
+      // Sluit-knop zichtbaar maken
+      if (closeButton) {
+        closeButton.classList.add('visible');
+      }
+    });
+  });
+
+  // Protocol sluiten
+  if (closeButton) {
+    closeButton.addEventListener('click', function () {
+      viewer.src = "";
+      frameWrapper.style.display = 'none';
+      placeholder.style.display = 'block';
+
+      // Sluit-knop weer verbergen
+      closeButton.classList.remove('visible');
+    });
+  }
+})();
+
+// KAART MET PRAKTIJKEN + DISCIPLINE-FILTERS
+(function () {
+  const mapEl = document.getElementById('praktijkMap');
+  if (!mapEl || typeof L === 'undefined') return;
+
+  const map = L.map('praktijkMap').setView([51.589, 4.775], 11);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap-bijdragers'
+  }).addTo(map);
+
+  // Mapping discipline -> label in marker
+  function getDisciplineLabel(discipline) {
+    switch (discipline) {
+      case 'Fysiotherapeut':
+        return 'F';
+      case 'Pedicure':
+        return 'Pe';
+      case 'Podotherapeut':
+        return 'Po';
+      case 'Orthopedisch schoenmaker':
+        return 'O';
+      default:
+        return '?';
+    }
   }
 
-  .nav-toggle {
-    display: flex;
-    align-self: flex-end;
-    order: 2;
+  const praktijken = [
+    {
+      naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
+      adres: 'Industriekade 10, 4815 HD Breda',
+      lat: 51.598725757929074,
+      lng: 4.770189527371777,
+      discipline: 'Fysiotherapeut'
+    },
+    {
+      naam: 'Monné Zorg & Beweging – Ginneken',
+      adres: 'Burgemeester Middelaerlaan 1, 4835 EK Breda',
+      lat: 51.568638372658555,
+      lng: 4.789287581342219,
+      discipline: 'Fysiotherapeut'
+    },
+    {
+      naam: 'Monné Zorg & Beweging – Breda Noord',
+      adres: 'Bernard de Wildestraat 400A, 4827 EG Breda',
+      lat: 51.60827779458874,
+      lng: 4.797783781344767,
+      discipline: 'Fysiotherapeut'
+    },
+    {
+      naam: 'Monné Zorg & Beweging – Haagse Beemden',
+      adres: 'Hondsdonk 58, 4824 CG Breda',
+      lat: 51.60639160124465,
+      lng: 4.744034407824659,
+      discipline: 'Fysiotherapeut'
+    },
+    {
+      naam: 'Monné Zorg & Beweging – Oosterhout (Vrachelen)',
+      adres: 'Merijntje Gijzenstraat 3e, 4906 EA Oosterhout',
+      lat: 51.6520346736143,
+      lng: 4.836288659875928,
+      discipline: 'Fysiotherapeut'
+    }
+  ];
+
+  const markers = [];
+
+  praktijken.forEach(p => {
+    const label = getDisciplineLabel(p.discipline);
+
+    const icon = L.divIcon({
+      className: 'discipline-marker-wrapper',
+      html: `<div class="discipline-marker">${label}</div>`,
+      iconSize: [30, 30],
+      iconAnchor: [15, 30]
+    });
+
+    const marker = L.marker([p.lat, p.lng], { icon })
+      .bindPopup(
+        `<strong>${p.naam}</strong><br>${p.adres}<br>${p.discipline}`
+      )
+      .addTo(map);
+
+    marker.discipline = p.discipline;
+    markers.push(marker);
+  });
+
+  // Discipline-filters
+  const checkboxes = document.querySelectorAll('.discipline-filters input[type="checkbox"]');
+
+  function updateMarkers() {
+    const activeDisciplines = new Set();
+    checkboxes.forEach(cb => {
+      if (cb.checked) {
+        activeDisciplines.add(cb.value);
+      }
+    });
+
+    markers.forEach(marker => {
+      if (activeDisciplines.has(marker.discipline)) {
+        if (!map.hasLayer(marker)) {
+          marker.addTo(map);
+        }
+      } else {
+        if (map.hasLayer(marker)) {
+          map.removeLayer(marker);
+        }
+      }
+    });
   }
 
-  .main-nav {
-    order: 3;
-    width: 100%;
-    display: none;            /* standaard ingeklapt */
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 0.4rem;
-  }
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', updateMarkers);
+  });
 
-  .main-nav.nav-open {
-    display: flex;           /* zichtbaar als open */
-  }
-
-  .main-nav-centered {
-    justify-content: flex-start;
-  }
-
-  .nav-link {
-    width: 100%;
-  }
-
-  .nav-link::after {
-    left: 1.1rem;
-    right: 1.1rem;
-  }
-}
-
-/* MAIN CONTENT */
-main {
-  max-width: 1100px;
-  margin: 2rem auto 3rem;
-  padding: 0 1.25rem;
-}
-
-/* HERO */
-.hero {
-  background: linear-gradient(
-    135deg,
-    rgba(106,142,121,0.08),
-    rgba(168,195,164,0.06)
-  );
-  border-radius: 24px;
-  padding: 2.3rem;
-  box-shadow: var(--shadow-soft);
-}
-
-.hero h1 {
-  margin-top: 0;
-  font-size: 2.2rem;
-  color: var(--color-primary);
-}
-
-.hero p {
-  font-size: 1.05rem;
-  margin-bottom: 0.9rem;
-}
-
-.pill-row {
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
-}
-
-.pill {
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
-  background: rgba(106,142,121,0.15);
-  border: 1px solid rgba(106,142,121,0.3);
-  font-size: 0.85rem;
-}
-
-.primary-button-wrapper {
-  margin-top: 1.5rem;
-}
-
-.primary-button {
-  padding: 0.65rem 1.6rem;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  box-shadow: 0 5px 14px rgba(0,0,0,0.12);
-}
-
-.primary-button:hover {
-  background: #587565;
-}
-
-/* TITELS */
-.section-title {
-  margin-top: 3rem;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-primary);
-}
-
-.section-title.small {
-  margin-top: 2.2rem;
-  font-size: 1.3rem;
-}
-
-/* VIEWER */
-.viewer {
-  margin-top: 2.5rem;
-  background: var(--color-card);
-  border-radius: 20px;
-  padding: 1.5rem;
-  box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(106,142,121,0.25);
-}
-
-.viewer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.viewer-placeholder {
-  color: var(--color-muted);
-  font-size: 0.95rem;
-}
-
-.viewer-frame-wrapper {
-  margin-top: 1rem;
-  display: none;
-}
-
-.viewer-frame-wrapper iframe {
-  width: 100%;
-  height: 600px;
-  border-radius: 16px;
-  border: none;
-  background: #f9fafb;
-}
-
-/* SLUIT KNOP PROTOCOL */
-.close-protocol-button {
-  display: none; /* standaard verborgen, pas zichtbaar na openen protocol */
-  padding: 0.4rem 1.1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(120, 40, 40, 0.2);
-  background: #C96868;
-  color: white;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-.close-protocol-button.visible {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.close-protocol-button:hover {
-  background: #B15353;
-}
-
-/* ACCORDIONS */
-details {
-  background: var(--color-card);
-  padding: 1.2rem 1.4rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(106,142,121,0.3);
-  box-shadow: var(--shadow-soft);
-  margin-bottom: 1.2rem;
-}
-
-summary {
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-}
-
-summary::-webkit-details-marker {
-  display: none;
-}
-
-summary::after {
-  content: "+";
-  color: var(--color-primary);
-  font-size: 1.3rem;
-}
-
-details[open] summary::after {
-  content: "−";
-}
-
-.accordion-content {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px dashed rgba(0,0,0,0.12);
-}
-
-/* TABLES */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-th, td {
-  padding: 0.7rem;
-  border-bottom: 1px solid #d5ddd9;
-  vertical-align: top;
-}
-
-th {
-  background: rgba(106,142,121,0.12);
-  color: var(--color-muted);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-}
-
-.doc-link {
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: white;
-  text-decoration: none;
-  font-size: 0.85rem;
-}
-
-.doc-link:hover {
-  background: #587565;
-}
-
-/* KAART */
-.map-card {
-  margin-top: 3rem;
-  background: var(--color-card);
-  padding: 1.5rem;
-  border-radius: 20px;
-  border: 1px solid rgba(106,142,121,0.25);
-  box-shadow: var(--shadow-soft);
-}
-
-#praktijkMap {
-  margin-top: 1rem;
-  width: 100%;
-  height: 400px;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-/* Discipline filters */
-.discipline-filters {
-  margin-top: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-.discipline-filter-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(106,142,121,0.08);
-  border: 1px solid rgba(106,142,121,0.25);
-}
-
-.discipline-filter-label input {
-  accent-color: var(--color-primary);
-}
-
-/* Marker met letters F / Pe / Po / O */
-.discipline-marker-wrapper {
-}
-
-.discipline-marker {
-  min-width: 26px;
-  min-height: 26px;
-  padding: 0 4px;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 700;
-  border: 2px solid #ffffff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-/* FOOTER */
-footer {
-  max-width: 1100px;
-  margin: 3rem auto 2rem;
-  text-align: center;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
-/* LINKS ALGEMEEN */
-a {
-  color: #2f5c48;
-}
-
-a:hover {
-  text-decoration: underline;
-}
+  // Initiale sync
+  updateMarkers();
+})();

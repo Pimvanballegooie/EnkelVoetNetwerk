@@ -85,6 +85,7 @@
    KAART MET PRAKTIJKEN + FILTERS
    - Meerdere disciplines per locatie
    - Blokjes naast elkaar, verschillende kleuren
+   - Per discipline aan/uit binnen hetzelfde icoon
 ============================ */
 (function () {
   // Check of Leaflet en kaartcontainer aanwezig zijn
@@ -127,11 +128,18 @@
   // met dezelfde lat/lng + andere discipline.
   var praktijken = [
     {
-      naam: 'Monné Zorg & Beweging – Belcrum',
+      naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
       adres: 'Industriekade 10, 4815 HD Breda',
       lat: 51.598725757929074,
       lng: 4.770189527371777,
       discipline: 'Fysiotherapeut'
+    },
+    {
+      naam: 'Alewijnse Podotherapie – Belcrum',
+      adres: 'Industriekade 10, 4815 HD Breda',
+      lat: 51.598725757929074,
+      lng: 4.770189527371777,
+      discipline: 'Podotherapeut'
     },
     {
       naam: 'Monné Zorg & Beweging – Ginneken',
@@ -160,14 +168,7 @@
       lat: 51.6520346736143,
       lng: 4.836288659875928,
       discipline: 'Fysiotherapeut'
-    },
-    {
-      naam: 'Alewijnse Podotherapie – Belcrum',
-      adres: 'Industriekade 10, 4815 HD Breda',
-      lat: 51.598725757929074,
-      lng: 4.770189527371777,
-      discipline: 'Podotherapeut'
-    }     
+    }
   ];
 
   // ---- GROEPEN MAKEN OP BASIS VAN LAT/LNG ----
@@ -186,7 +187,7 @@
 
   var markers = [];
 
-  // Voor elke unieke locatie één marker met blokjes naast elkaar
+  // Voor elke unieke locatie één marker met alle disciplines
   Object.keys(groupsByLocation).forEach(function (key) {
     var group = groupsByLocation[key];
     var lat = group.lat;
@@ -201,7 +202,7 @@
       }
     });
 
-    // HTML voor de blokjes
+    // — initieel: icoon met alle disciplines, wordt later door updateMarkers aangepast —
     var blocksHtml = uniqueDisciplines.map(function (d) {
       var label = getLabel(d);
       var dClass = getDisciplineClass(d);
@@ -209,7 +210,6 @@
     }).join('');
 
     var iconHtml = '<div class="discipline-marker-group">' + blocksHtml + '</div>';
-
     var iconWidth = (uniqueDisciplines.length * 22) + 8;
 
     var icon = L.divIcon({
@@ -240,23 +240,52 @@
   function updateMarkers() {
     if (!checkboxes.length) return;
 
+    // actieve disciplines (global)
     var active = [];
     checkboxes.forEach(function (cb) {
       if (cb.checked) {
         active.push(cb.value);
       }
     });
+    var activeSet = new Set(active);
 
     markers.forEach(function (marker) {
-      var visible = marker.disciplines.some(function (d) {
-        return active.indexOf(d) !== -1;
+      // voor deze marker: welke disciplines zijn actief?
+      var activeForMarker = marker.disciplines.filter(function (d) {
+        return activeSet.has(d);
       });
 
-      if (visible) {
-        if (!map.hasLayer(marker)) marker.addTo(map);
-      } else {
-        if (map.hasLayer(marker)) map.removeLayer(marker);
+      // als geen enkele discipline voor deze marker actief is → marker verbergen
+      if (activeForMarker.length === 0) {
+        if (map.hasLayer(marker)) {
+          map.removeLayer(marker);
+        }
+        return;
       }
+
+      // marker moet zichtbaar zijn
+      if (!map.hasLayer(marker)) {
+        marker.addTo(map);
+      }
+
+      // icoon opnieuw opbouwen op basis van alleen de ACTIEVE disciplines
+      var blocksHtml = activeForMarker.map(function (d) {
+        var label = getLabel(d);
+        var dClass = getDisciplineClass(d);
+        return '<div class="discipline-marker discipline-marker--' + dClass + '">' + label + '</div>';
+      }).join('');
+
+      var iconHtml = '<div class="discipline-marker-group">' + blocksHtml + '</div>';
+      var iconWidth = (activeForMarker.length * 22) + 8;
+
+      var newIcon = L.divIcon({
+        html: iconHtml,
+        className: '',
+        iconSize: [iconWidth, 26],
+        iconAnchor: [iconWidth / 2, 26]
+      });
+
+      marker.setIcon(newIcon);
     });
   }
 
@@ -264,5 +293,6 @@
     cb.addEventListener('change', updateMarkers);
   });
 
+  // initiale sync: gebruikt de huidige checkbox-stand
   updateMarkers();
 })();

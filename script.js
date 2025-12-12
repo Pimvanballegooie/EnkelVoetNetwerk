@@ -134,13 +134,6 @@
       discipline: 'Fysiotherapeut'
     },
     {
-      naam: 'Alewijnse Podotherapie – Belcrum',
-      adres: 'Industriekade 10, 4815 HD Breda',
-      lat: 51.598725757929074,
-      lng: 4.770189527371777,
-      discipline: 'Podotherapeut'
-    },
-    {
       naam: 'Monné Zorg & Beweging – Ginneken',
       adres: 'Burgemeester Middelaerlaan 1, 4835 EK Breda',
       lat: 51.568638372658555,

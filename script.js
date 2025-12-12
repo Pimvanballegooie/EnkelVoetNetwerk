@@ -143,7 +143,15 @@
       lat: 51.6520346736143,
       lng: 4.836288659875928,
       discipline: 'Fysiotherapeut'
-    }
+    },
+    {
+      naam: 'Alewijnse Podotherapie',
+      adres: 'Industriekade 10, 4815 HD Breda',
+      lat: 51.598725757929074,
+      lng: 4.770189527371777,
+      discipline: 'Podotherapeut'
+    },
+   
   ];
 
   const markers = [];

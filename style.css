@@ -39,7 +39,7 @@ header {
   border-bottom: 1px solid rgba(106,142,121,0.25);
   position: sticky;
   top: 0;
-  z-index: 1000; /* <<< FIX: header altijd boven de kaart */
+  z-index: 1000;
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
@@ -112,7 +112,7 @@ header.header-scrolled {
 
 .main-nav-centered {
   width: 100%;
-  justify-content: flex-start; /* LINKS */
+  justify-content: flex-start;
 }
 
 /* MENU KNOPPEN */
@@ -213,7 +213,8 @@ main {
 
 /* HERO */
 .hero {
-  background: linear-gradient(135deg,
+  background: linear-gradient(
+    135deg,
     rgba(106,142,121,0.08),
     rgba(168,195,164,0.06)
   );
@@ -289,6 +290,17 @@ main {
   box-shadow: var(--shadow-soft);
 }
 
+.viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.viewer-placeholder {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
 .viewer-frame-wrapper {
   display: none;
   margin-top: 1rem;
@@ -301,6 +313,7 @@ main {
   border: none;
 }
 
+/* SLUIT PROTOCOL BUTTON */
 .close-protocol-button {
   display: none;
   padding: 0.4rem 1.1rem;
@@ -311,6 +324,7 @@ main {
   cursor: pointer;
   font-weight: 600;
   font-size: 0.85rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 .close-protocol-button.visible {
@@ -378,11 +392,11 @@ td {
   border: 1px solid rgba(106,142,121,0.25);
 }
 
-/* <<< FIX: kaart altijd ONDER header >>> */
+/* kaart altijd onder header */
 .leaflet-container,
 #praktijkMap {
   position: relative;
-  z-index: 0; /* <<< kaart ligt nu onder header */
+  z-index: 0;
 }
 
 #praktijkMap {
@@ -416,20 +430,49 @@ td {
   accent-color: var(--color-primary);
 }
 
-/* DISCIPLINE MARKERS */
-.discipline-marker {
-  min-width: 26px;
-  min-height: 26px;
-  padding: 0 4px;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: white;
-  border: 2px solid white;
-  font-weight: 700;
-  font-size: 0.8rem;
+/* DISCIPLINE MARKER GROUP & BLOKKEN */
+.discipline-marker-group {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.discipline-marker {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Kleuren per discipline */
+.discipline-marker--fysio {
+  background: #6A8E79;
+}
+
+.discipline-marker--pedicure {
+  background: #C97A95; /* zacht roze/rood */
+}
+
+.discipline-marker--podo {
+  background: #E0A72E; /* warm geel/oranje */
+}
+
+.discipline-marker--os {
+  background: #4F82C0; /* blauw */
+}
+
+.discipline-marker--default {
+  background: #666666;
 }
 
 /* FOOTER */

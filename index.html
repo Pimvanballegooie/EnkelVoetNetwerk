@@ -1,15 +1,256 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enkel Voet Netwerk Breda e.o.</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Eigen CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo">
+      <img src="logo.png" alt="Enkel Voet Netwerk banner" />
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Enkel Voet Netwerk Breda e.o.</h1>
+
+    <p>
+      Het Enkel Voet Netwerk Breda e.o. is een netwerk dat staat voor samenwerking in de regio én
+      hoogwaardige, eenduidige begeleiding.
+    </p>
+
+    <p>
+      Transparantie, samenwerking, eenduidig beleid en aandacht voor gezondheidsvaardigheden
+      zorgen voor betere begeleiding van cliënten.
+    </p>
+
+    <p>Alle protocollen zijn beschikbaar in drie niveaus:</p>
+
+    <div class="pill-row">
+      <div class="pill">1. Makkelijk te lezen</div>
+      <div class="pill">2. Leesbaar</div>
+      <div class="pill">3. Moeilijk leesbaar</div>
+    </div>
+
+    <div class="primary-button-wrapper">
+      <a href="#locaties" class="primary-button">Direct naar deelnemende locaties</a>
+    </div>
+  </section>
+
+  <h2 class="section-title">Behandelprotocollen per regio van de voet</h2>
+
   <!-- VIEWER -->
   <section class="viewer">
     <div class="viewer-header">
       <h2 class="section-title small">Geselecteerd protocol</h2>
-      <button type="button" class="close-protocol-button" id="closeProtocolButton">
+      <button type="button" id="closeProtocolButton" class="close-protocol-button">
         Protocol sluiten
       </button>
     </div>
+
     <p class="viewer-placeholder">
       Kies een protocol hieronder. Het document verschijnt hier.
     </p>
+
     <div class="viewer-frame-wrapper">
       <iframe id="docViewer" src="" title="Protocol viewer" loading="lazy"></iframe>
     </div>
   </section>
+
+  <!-- ENKEL -->
+  <details>
+    <summary>Enkel</summary>
+    <div class="accordion-content">
+      <p>De enkel verbindt je onderbeen en voet.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>Makkelijk</th>
+            <th>Leesbaar</th>
+            <th>Moeilijk</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Re-insertie buitenste enkelpees</td>
+            <td>
+              <a
+                class="doc-link"
+                data-doc-url="https://docs.google.com/document/d/1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8/preview"
+                href="#"
+              >Open</a>
+            </td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- ACHTERVOET -->
+  <details>
+    <summary>Achtervoet</summary>
+    <div class="accordion-content">
+      <p>De achtervoet bestaat uit het hielbeen en sprongbeen.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>Makkelijk</th>
+            <th>Leesbaar</th>
+            <th>Moeilijk</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Voorbeeldprotocol achtervoet</td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- MIDDENVOET -->
+  <details>
+    <summary>Middenvoet</summary>
+    <div class="accordion-content">
+      <p>De middenvoet zorgt voor stabiliteit en afrollen.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>Makkelijk</th>
+            <th>Leesbaar</th>
+            <th>Moeilijk</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Voorbeeldprotocol middenvoet</td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- VOORVOET -->
+  <details>
+    <summary>Voorvoet</summary>
+    <div class="accordion-content">
+      <p>De voorvoet stuurt balans en afzet.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>Makkelijk</th>
+            <th>Leesbaar</th>
+            <th>Moeilijk</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Voorbeeldprotocol voorvoet</td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- KAART MET PRAKTIJKEN -->
+  <section class="map-card" id="locaties">
+    <h2 class="section-title small">Deelnemende praktijken</h2>
+
+    <p>Onderstaand kaartje toont de deelnemende praktijken binnen het netwerk.</p>
+
+    <div id="praktijkMap"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Organisatie</th>
+          <th>Locatie</th>
+          <th>Contact</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Industriekade 10, Breda (Belcrum)</td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
+        </tr>
+
+        <tr>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Burg. Middelaerlaan 1, Breda (Ginneken)</td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
+        </tr>
+
+        <tr>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Bernard de Wildestraat 400A, Breda Noord</td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
+        </tr>
+
+        <tr>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Hondsdonk 58, Haagse Beemden</td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
+        </tr>
+
+        <tr>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Merijntje Gijzenstraat 3e, Oosterhout</td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </section>
+
+</main>
+
+<footer>
+  Enkel Voet Netwerk Breda e.o. – samenwerking voor hoogwaardige enkel- en voetzorg.
+</footer>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Eigen script -->
+<script src="script.js"></script>
+
+</body>
+</html>

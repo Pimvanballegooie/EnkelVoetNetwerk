@@ -16,14 +16,18 @@
 
 <header>
   <div class="nav-inner">
+
+    <!-- LOGO -->
     <div class="logo">
       <img src="logo.png" alt="Enkel Voet Netwerk banner" />
     </div>
 
-    <nav class="main-nav">
+    <!-- MENU HORIZONTAAL ONDER LOGO -->
+    <nav class="main-nav main-nav-centered">
+
       <!-- Home -->
       <a href="#top" class="nav-link">
-        <span class="nav-icon" aria-hidden="true">
+        <span class="nav-icon">
           <svg viewBox="0 0 24 24">
             <path d="M4 11L12 4l8 7v8a1 1 0 0 1-1 1h-4v-5H9v5H5a1 1 0 0 1-1-1v-8z" />
           </svg>
@@ -33,7 +37,7 @@
 
       <!-- Protocollen -->
       <a href="#protocollen" class="nav-link">
-        <span class="nav-icon" aria-hidden="true">
+        <span class="nav-icon">
           <svg viewBox="0 0 24 24">
             <path d="M6 3h9l3 3v15H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
             <path d="M9 8h6M9 12h6M9 16h3" />
@@ -44,7 +48,7 @@
 
       <!-- Locaties -->
       <a href="#locaties" class="nav-link">
-        <span class="nav-icon" aria-hidden="true">
+        <span class="nav-icon">
           <svg viewBox="0 0 24 24">
             <path d="M12 2C8.7 2 6 4.7 6 8c0 4.4 4.6 9.5 5.6 10.6a0.6 0.6 0 0 0 .8 0C13.4 17.5 18 12.4 18 8c0-3.3-2.7-6-6-6z" />
             <circle cx="12" cy="8" r="2.5" />
@@ -53,9 +57,9 @@
         <span>Locaties</span>
       </a>
 
-      <!-- Locatie worden (aparte pagina) -->
+      <!-- Locatie worden -->
       <a href="locatie-worden.html" class="nav-link nav-link-accent">
-        <span class="nav-icon" aria-hidden="true">
+        <span class="nav-icon">
           <svg viewBox="0 0 24 24">
             <path d="M12 3l6 3v4c0 4.4-2.7 8.4-6 9-3.3-.6-6-4.6-6-9V6l6-3z" />
             <path d="M10 11h4M12 9v4" />
@@ -63,12 +67,15 @@
         </span>
         <span>Locatie worden</span>
       </a>
+
     </nav>
   </div>
 </header>
 
+
 <main>
 
+  <!-- HERO -->
   <section class="hero">
     <h1>Enkel Voet Netwerk Breda e.o.</h1>
 
@@ -95,6 +102,8 @@
     </div>
   </section>
 
+
+  <!-- PROTOCOL SECTIE -->
   <h2 class="section-title" id="protocollen">Behandelprotocollen per regio van de voet</h2>
 
   <!-- VIEWER -->
@@ -115,7 +124,8 @@
     </div>
   </section>
 
-  <!-- ENKEL -->
+
+  <!-- PROTOCOL ACCORDIONS -->
   <details>
     <summary>Enkel</summary>
     <div class="accordion-content">
@@ -145,11 +155,12 @@
             <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
           </tr>
         </tbody>
+
       </table>
     </div>
   </details>
 
-  <!-- ACHTERVOET -->
+
   <details>
     <summary>Achtervoet</summary>
     <div class="accordion-content">
@@ -173,11 +184,12 @@
             <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
           </tr>
         </tbody>
+
       </table>
     </div>
   </details>
 
-  <!-- MIDDENVOET -->
+
   <details>
     <summary>Middenvoet</summary>
     <div class="accordion-content">
@@ -201,11 +213,12 @@
             <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
           </tr>
         </tbody>
+
       </table>
     </div>
   </details>
 
-  <!-- VOORVOET -->
+
   <details>
     <summary>Voorvoet</summary>
     <div class="accordion-content">
@@ -229,11 +242,13 @@
             <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
           </tr>
         </tbody>
+
       </table>
     </div>
   </details>
 
-  <!-- KAART MET PRAKTIJKEN -->
+
+  <!-- LOCATIES -->
   <section class="map-card" id="locaties">
     <h2 class="section-title small">Deelnemende praktijken</h2>
 
@@ -242,18 +257,22 @@
     <!-- Discipline filters -->
     <div class="discipline-filters">
       <span>Toon disciplines:</span>
+
       <label class="discipline-filter-label">
         <input type="checkbox" value="Fysiotherapeut" checked />
         Fysiotherapeut
       </label>
+
       <label class="discipline-filter-label">
         <input type="checkbox" value="Pedicure" checked />
         Pedicure
       </label>
+
       <label class="discipline-filter-label">
         <input type="checkbox" value="Podotherapeut" checked />
         Podotherapeut
       </label>
+
       <label class="discipline-filter-label">
         <input type="checkbox" value="Orthopedisch schoenmaker" checked />
         Orthopedisch schoenmaker
@@ -274,57 +293,42 @@
 
       <tbody>
         <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Industriekade 10, 4815 HD Breda (Belcrum – hoofdlocatie)</td>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Industriekade 10, 4815 HD Breda (Belcrum)</td>
           <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
         </tr>
 
         <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
           <td>Burgemeester Middelaerlaan 1, 4835 EK Breda (Ginneken)</td>
           <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
         </tr>
 
         <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Bernard de Wildestraat 400A, 4827 EG Breda (Breda Noord)</td>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Bernard de Wildestraat 400A, 4827 EG Breda</td>
           <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
         </tr>
 
         <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Hondsdonk 58, 4824 CG Breda (Haagse Beemden)</td>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Hondsdonk 58, Breda</td>
           <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
         </tr>
 
         <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Merijntje Gijzenstraat 3e, 4906 EA Oosterhout (Vrachelen)</td>
+          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg & Beweging</a></td>
+          <td>Merijntje Gijzenstraat 3e, Oosterhout</td>
           <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
+          <td>E: info@monne-zorgenbeweging.nl<br />T: 076-5810491</td>
         </tr>
       </tbody>
-    </table>
 
+    </table>
   </section>
 
 </main>

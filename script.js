@@ -2,12 +2,12 @@
    AUTOMATISCHE HEADER OFFSET
 ============================ */
 (function () {
-  const header = document.querySelector('header');
+  var header = document.querySelector('header');
   if (!header) return;
 
   function updateHeaderOffset() {
-    const height = header.offsetHeight;
-    document.documentElement.style.setProperty('--header-offset', `${height + 10}px`);
+    var height = header.offsetHeight;
+    document.documentElement.style.setProperty('--header-offset', (height + 10) + 'px');
   }
 
   updateHeaderOffset();
@@ -18,7 +18,7 @@
    HEADER SCROLL EFFECT
 ============================ */
 (function () {
-  const header = document.querySelector('header');
+  var header = document.querySelector('header');
   if (!header) return;
 
   window.addEventListener('scroll', function () {
@@ -34,12 +34,12 @@
    MOBIEL NAVIGATIE MENU
 ============================ */
 (function () {
-  const navToggle = document.querySelector('.nav-toggle');
-  const mainNav = document.querySelector('.main-nav');
+  var navToggle = document.querySelector('.nav-toggle');
+  var mainNav = document.querySelector('.main-nav');
 
   if (!navToggle || !mainNav) return;
 
-  navToggle.addEventListener('click', () => {
+  navToggle.addEventListener('click', function () {
     navToggle.classList.toggle('nav-toggle-open');
     mainNav.classList.toggle('nav-open');
   });
@@ -49,32 +49,31 @@
    GOOGLE DOC VIEWER
 ============================ */
 (function () {
-  const viewer = document.getElementById('docViewer');
-  const placeholder = document.querySelector('.viewer-placeholder');
-  const frameWrapper = document.querySelector('.viewer-frame-wrapper');
-  const closeButton = document.getElementById('closeProtocolButton');
+  var viewer = document.getElementById('docViewer');
+  var placeholder = document.querySelector('.viewer-placeholder');
+  var frameWrapper = document.querySelector('.viewer-frame-wrapper');
+  var closeButton = document.getElementById('closeProtocolButton');
 
   if (!viewer || !placeholder || !frameWrapper || !closeButton) return;
 
-  const links = document.querySelectorAll('a.doc-link[data-doc-url]');
+  var links = document.querySelectorAll('a.doc-link[data-doc-url]');
 
   // Protocol openen
-  links.forEach(link => {
-    link.addEventListener('click', e => {
+  links.forEach(function (link) {
+    link.addEventListener('click', function (e) {
       e.preventDefault();
-      const url = link.getAttribute('data-doc-url');
+      var url = link.getAttribute('data-doc-url');
       if (!url || url === '#') return;
 
       viewer.src = url;
       frameWrapper.style.display = 'block';
       placeholder.style.display = 'none';
-
       closeButton.classList.add('visible');
     });
   });
 
   // Protocol sluiten
-  closeButton.addEventListener('click', () => {
+  closeButton.addEventListener('click', function () {
     viewer.src = "";
     frameWrapper.style.display = 'none';
     placeholder.style.display = 'block';
@@ -88,12 +87,13 @@
    - Blokjes naast elkaar, verschillende kleuren
 ============================ */
 (function () {
+  // Check of Leaflet en kaartcontainer aanwezig zijn
   if (typeof L === 'undefined') return;
 
-  const mapElement = document.getElementById('praktijkMap');
+  var mapElement = document.getElementById('praktijkMap');
   if (!mapElement) return;
 
-  const map = L.map('praktijkMap').setView([51.589, 4.775], 11);
+  var map = L.map('praktijkMap').setView([51.589, 4.775], 11);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
@@ -102,28 +102,30 @@
 
   // Label op de blokjes
   function getLabel(discipline) {
-    return {
+    var mapDisc = {
       'Fysiotherapeut': 'F',
       'Pedicure': 'Pe',
       'Podotherapeut': 'Po',
       'Orthopedisch schoenmaker': 'O'
-    }[discipline] || '?';
+    };
+    return mapDisc[discipline] || '?';
   }
 
   // CSS-klasse per discipline (voor kleur in CSS)
   function getDisciplineClass(discipline) {
-    return {
+    var mapClass = {
       'Fysiotherapeut': 'fysio',
       'Pedicure': 'pedicure',
       'Podotherapeut': 'podo',
       'Orthopedisch schoenmaker': 'os'
-    }[discipline] || 'default';
+    };
+    return mapClass[discipline] || 'default';
   }
 
-  // ---- HIER JE LOCATIES ----
-  // Je mag hier meerdere regels met dezelfde lat/lng hebben,
-  // maar MET verschillende disciplines.
-  const praktijken = [
+  // ---- LOCATIES ----
+  // Extra discipline op dezelfde locatie? Voeg gewoon een extra object toe
+  // met dezelfde lat/lng + andere discipline.
+  var praktijken = [
     {
       naam: 'Monné Zorg & Beweging – Belcrum',
       adres: 'Industriekade 10, 4815 HD Breda',
@@ -131,15 +133,13 @@
       lng: 4.770189527371777,
       discipline: 'Fysiotherapeut'
     },
-    // voorbeeld: zelfde locatie met extra discipline Podotherapeut
-    // {
-    //   naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
-    //   adres: 'Industriekade 10, 4815 HD Breda',
-    //   lat: 51.598725757929074,
-    //   lng: 4.770189527371777,
-    //   discipline: 'Podotherapeut'
-    // },
-
+    {
+      naam: 'Alewijnse Podotherapie – Belcrum',
+      adres: 'Industriekade 10, 4815 HD Breda',
+      lat: 51.598725757929074,
+      lng: 4.770189527371777,
+      discipline: 'Podotherapeut'
+    },
     {
       naam: 'Monné Zorg & Beweging – Ginneken',
       adres: 'Burgemeester Middelaerlaan 1, 4835 EK Breda',
@@ -167,65 +167,72 @@
       lat: 51.6520346736143,
       lng: 4.836288659875928,
       discipline: 'Fysiotherapeut'
-    }
+    },
     {
-      naam: 'Alewijnse Podotherapie - Belcrum',
+      naam: 'Alewijnse Podotherapie – Belcrum',
       adres: 'Industriekade 10, 4815 HD Breda',
       lat: 51.598725757929074,
       lng: 4.770189527371777,
-      discipline: 'Podotherapie'
-    },
-     
+      discipline: 'Podotherapeut'
+    }     
   ];
 
   // ---- GROEPEN MAKEN OP BASIS VAN LAT/LNG ----
-  const groupsMap = new Map();
-
-  praktijken.forEach(p => {
-    const key = `${p.lat},${p.lng}`;
-    if (!groupsMap.has(key)) {
-      groupsMap.set(key, {
+  var groupsByLocation = {};
+  praktijken.forEach(function (p) {
+    var key = p.lat + ',' + p.lng;
+    if (!groupsByLocation[key]) {
+      groupsByLocation[key] = {
         lat: p.lat,
         lng: p.lng,
         items: []
-      });
+      };
     }
-    groupsMap.get(key).items.push(p);
+    groupsByLocation[key].items.push(p);
   });
 
-  const markers = [];
+  var markers = [];
 
   // Voor elke unieke locatie één marker met blokjes naast elkaar
-  groupsMap.forEach(group => {
-    const { lat, lng, items } = group;
+  Object.keys(groupsByLocation).forEach(function (key) {
+    var group = groupsByLocation[key];
+    var lat = group.lat;
+    var lng = group.lng;
+    var items = group.items;
 
-    // Alle disciplines voor deze locatie
-    const disciplines = items.map(i => i.discipline);
-    const uniqueDisciplines = [...new Set(disciplines)];
+    // Unieke disciplines bepalen
+    var uniqueDisciplines = [];
+    items.forEach(function (item) {
+      if (uniqueDisciplines.indexOf(item.discipline) === -1) {
+        uniqueDisciplines.push(item.discipline);
+      }
+    });
 
-    // HTML voor het icoon: een "group" met blokjes naast elkaar
-    const blocksHtml = uniqueDisciplines.map(d => {
-      const label = getLabel(d);
-      const dClass = getDisciplineClass(d);
-      return `<div class="discipline-marker discipline-marker--${dClass}">${label}</div>`;
+    // HTML voor de blokjes
+    var blocksHtml = uniqueDisciplines.map(function (d) {
+      var label = getLabel(d);
+      var dClass = getDisciplineClass(d);
+      return '<div class="discipline-marker discipline-marker--' + dClass + '">' + label + '</div>';
     }).join('');
 
-    const iconHtml = `<div class="discipline-marker-group">${blocksHtml}</div>`;
+    var iconHtml = '<div class="discipline-marker-group">' + blocksHtml + '</div>';
 
-    const icon = L.divIcon({
+    var iconWidth = (uniqueDisciplines.length * 22) + 8;
+
+    var icon = L.divIcon({
       html: iconHtml,
       className: '',
-      iconSize: [uniqueDisciplines.length * 22 + 8, 26],
-      iconAnchor: [ (uniqueDisciplines.length * 22 + 8) / 2, 26 ]
+      iconSize: [iconWidth, 26],
+      iconAnchor: [iconWidth / 2, 26]
     });
 
     // Popuptekst met alle namen + disciplines
-    const popupLines = items.map(i => {
-      return `<strong>${i.naam}</strong><br>${i.adres}<br>${i.discipline}`;
+    var popupLines = items.map(function (i) {
+      return '<strong>' + i.naam + '</strong><br>' + i.adres + '<br>' + i.discipline;
     });
-    const popupHtml = popupLines.join('<hr style="margin:4px 0;" />');
+    var popupHtml = popupLines.join('<hr style="margin:4px 0;" />');
 
-    const marker = L.marker([lat, lng], { icon })
+    var marker = L.marker([lat, lng], { icon: icon })
       .bindPopup(popupHtml)
       .addTo(map);
 
@@ -235,17 +242,24 @@
   });
 
   // ---- DISCIPLINE-FILTERS ----
-  const checkboxes = document.querySelectorAll('.discipline-filters input[type="checkbox"]');
+  var checkboxes = document.querySelectorAll('.discipline-filters input[type="checkbox"]');
 
   function updateMarkers() {
-    const active = new Set(
-      [...checkboxes].filter(c => c.checked).map(c => c.value)
-    );
+    if (!checkboxes.length) return;
 
-    markers.forEach(marker => {
-      // Toon marker als minimaal één discipline actief is
-      const hasActive = marker.disciplines.some(d => active.has(d));
-      if (hasActive) {
+    var active = [];
+    checkboxes.forEach(function (cb) {
+      if (cb.checked) {
+        active.push(cb.value);
+      }
+    });
+
+    markers.forEach(function (marker) {
+      var visible = marker.disciplines.some(function (d) {
+        return active.indexOf(d) !== -1;
+      });
+
+      if (visible) {
         if (!map.hasLayer(marker)) marker.addTo(map);
       } else {
         if (map.hasLayer(marker)) map.removeLayer(marker);
@@ -253,7 +267,9 @@
     });
   }
 
-  checkboxes.forEach(cb => cb.addEventListener('change', updateMarkers));
+  checkboxes.forEach(function (cb) {
+    cb.addEventListener('change', updateMarkers);
+  });
 
   updateMarkers();
 })();

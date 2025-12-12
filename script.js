@@ -125,7 +125,7 @@
   // maar MET verschillende disciplines.
   const praktijken = [
     {
-      naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
+      naam: 'Monné Zorg & Beweging – Belcrum',
       adres: 'Industriekade 10, 4815 HD Breda',
       lat: 51.598725757929074,
       lng: 4.770189527371777,
@@ -168,6 +168,14 @@
       lng: 4.836288659875928,
       discipline: 'Fysiotherapeut'
     }
+    {
+      naam: 'Alewijnse Podotherapie - Belcrum',
+      adres: 'Industriekade 10, 4815 HD Breda',
+      lat: 51.598725757929074,
+      lng: 4.770189527371777,
+      discipline: 'Podotherapie'
+    },
+     
   ];
 
   // ---- GROEPEN MAKEN OP BASIS VAN LAT/LNG ----

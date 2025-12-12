@@ -84,6 +84,8 @@
 
 /* ============================
    KAART MET PRAKTIJKEN + FILTERS
+   - Meerdere disciplines per locatie
+   - Blokjes naast elkaar, verschillende kleuren
 ============================ */
 (function () {
   if (typeof L === 'undefined') return;
@@ -98,7 +100,7 @@
     attribution: '© OpenStreetMap-bijdragers'
   }).addTo(map);
 
-  // Marker labels
+  // Label op de blokjes
   function getLabel(discipline) {
     return {
       'Fysiotherapeut': 'F',
@@ -108,6 +110,19 @@
     }[discipline] || '?';
   }
 
+  // CSS-klasse per discipline (voor kleur in CSS)
+  function getDisciplineClass(discipline) {
+    return {
+      'Fysiotherapeut': 'fysio',
+      'Pedicure': 'pedicure',
+      'Podotherapeut': 'podo',
+      'Orthopedisch schoenmaker': 'os'
+    }[discipline] || 'default';
+  }
+
+  // ---- HIER JE LOCATIES ----
+  // Je mag hier meerdere regels met dezelfde lat/lng hebben,
+  // maar MET verschillende disciplines.
   const praktijken = [
     {
       naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
@@ -116,6 +131,15 @@
       lng: 4.770189527371777,
       discipline: 'Fysiotherapeut'
     },
+    // voorbeeld: zelfde locatie met extra discipline Podotherapeut
+    // {
+    //   naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
+    //   adres: 'Industriekade 10, 4815 HD Breda',
+    //   lat: 51.598725757929074,
+    //   lng: 4.770189527371777,
+    //   discipline: 'Podotherapeut'
+    // },
+
     {
       naam: 'Monné Zorg & Beweging – Ginneken',
       adres: 'Burgemeester Middelaerlaan 1, 4835 EK Breda',
@@ -143,39 +167,66 @@
       lat: 51.6520346736143,
       lng: 4.836288659875928,
       discipline: 'Fysiotherapeut'
-    },
-    {
-      naam: 'Alewijnse Podotherapie',
-      adres: 'Industriekade 10, 4815 HD Breda',
-      lat: 51.598725757929074,
-      lng: 4.770189527371777,
-      discipline: 'Podotherapeut'
-    },
-   
+    }
   ];
+
+  // ---- GROEPEN MAKEN OP BASIS VAN LAT/LNG ----
+  const groupsMap = new Map();
+
+  praktijken.forEach(p => {
+    const key = `${p.lat},${p.lng}`;
+    if (!groupsMap.has(key)) {
+      groupsMap.set(key, {
+        lat: p.lat,
+        lng: p.lng,
+        items: []
+      });
+    }
+    groupsMap.get(key).items.push(p);
+  });
 
   const markers = [];
 
-  // Toevoegen markers
-  praktijken.forEach(p => {
+  // Voor elke unieke locatie één marker met blokjes naast elkaar
+  groupsMap.forEach(group => {
+    const { lat, lng, items } = group;
+
+    // Alle disciplines voor deze locatie
+    const disciplines = items.map(i => i.discipline);
+    const uniqueDisciplines = [...new Set(disciplines)];
+
+    // HTML voor het icoon: een "group" met blokjes naast elkaar
+    const blocksHtml = uniqueDisciplines.map(d => {
+      const label = getLabel(d);
+      const dClass = getDisciplineClass(d);
+      return `<div class="discipline-marker discipline-marker--${dClass}">${label}</div>`;
+    }).join('');
+
+    const iconHtml = `<div class="discipline-marker-group">${blocksHtml}</div>`;
+
     const icon = L.divIcon({
-      html: `<div class="discipline-marker">${getLabel(p.discipline)}</div>`,
+      html: iconHtml,
       className: '',
-      iconSize: [30, 30],
-      iconAnchor: [15, 30]
+      iconSize: [uniqueDisciplines.length * 22 + 8, 26],
+      iconAnchor: [ (uniqueDisciplines.length * 22 + 8) / 2, 26 ]
     });
 
-    const marker = L.marker([p.lat, p.lng], { icon })
-      .bindPopup(
-        `<strong>${p.naam}</strong><br>${p.adres}<br>${p.discipline}`
-      )
+    // Popuptekst met alle namen + disciplines
+    const popupLines = items.map(i => {
+      return `<strong>${i.naam}</strong><br>${i.adres}<br>${i.discipline}`;
+    });
+    const popupHtml = popupLines.join('<hr style="margin:4px 0;" />');
+
+    const marker = L.marker([lat, lng], { icon })
+      .bindPopup(popupHtml)
       .addTo(map);
 
-    marker.discipline = p.discipline;
+    // Bewaar alle disciplines van deze marker voor filtering
+    marker.disciplines = uniqueDisciplines;
     markers.push(marker);
   });
 
-  // Discipline-filters
+  // ---- DISCIPLINE-FILTERS ----
   const checkboxes = document.querySelectorAll('.discipline-filters input[type="checkbox"]');
 
   function updateMarkers() {
@@ -184,7 +235,9 @@
     );
 
     markers.forEach(marker => {
-      if (active.has(marker.discipline)) {
+      // Toon marker als minimaal één discipline actief is
+      const hasActive = marker.disciplines.some(d => active.has(d));
+      if (hasActive) {
         if (!map.hasLayer(marker)) marker.addTo(map);
       } else {
         if (map.hasLayer(marker)) map.removeLayer(marker);

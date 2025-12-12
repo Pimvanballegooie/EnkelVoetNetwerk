@@ -152,6 +152,6 @@
     cb.addEventListener('change', updateMarkers);
   });
 
-  // Initiale sync (zou hetzelfde moeten zijn als standaard, maar dan is het robuust)
+  // Initiale sync
   updateMarkers();
 })();

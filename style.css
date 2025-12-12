@@ -71,10 +71,16 @@ main {
   color: var(--color-primary);
 }
 
+.hero p {
+  font-size: 1.05rem;
+  margin-bottom: 0.9rem;
+}
+
 .pill-row {
   display: flex;
   gap: 0.6rem;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 .pill {
@@ -83,6 +89,10 @@ main {
   background: rgba(106,142,121,0.15);
   border: 1px solid rgba(106,142,121,0.3);
   font-size: 0.85rem;
+}
+
+.primary-button-wrapper {
+  margin-top: 1.5rem;
 }
 
 .primary-button {
@@ -99,6 +109,19 @@ main {
   background: #587565;
 }
 
+.section-title {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.section-title.small {
+  margin-top: 2.2rem;
+  font-size: 1.3rem;
+}
+
 /* VIEWER */
 .viewer {
   margin-top: 2.5rem;
@@ -113,10 +136,12 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .viewer-placeholder {
   color: var(--color-muted);
+  font-size: 0.95rem;
 }
 
 .viewer-frame-wrapper {
@@ -129,18 +154,27 @@ main {
   height: 600px;
   border-radius: 16px;
   border: none;
+  background: #f9fafb;
 }
 
 /* SLUIT KNOP */
 .close-protocol-button {
+  display: none; /* standaard verborgen, pas zichtbaar na openen protocol */
   padding: 0.4rem 1rem;
   border-radius: 999px;
   border: 1px solid rgba(120, 40, 40, 0.2);
   background: #C96868;
   color: white;
+  font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.close-protocol-button.visible {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .close-protocol-button:hover {
@@ -162,15 +196,27 @@ summary {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
 }
 
 summary::after {
   content: "+";
   color: var(--color-primary);
+  font-size: 1.3rem;
 }
 
 details[open] summary::after {
   content: "−";
+}
+
+.accordion-content {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(0,0,0,0.12);
 }
 
 /* TABLES */
@@ -183,6 +229,7 @@ table {
 th, td {
   padding: 0.7rem;
   border-bottom: 1px solid #d5ddd9;
+  vertical-align: top;
 }
 
 th {
@@ -190,6 +237,7 @@ th {
   color: var(--color-muted);
   text-transform: uppercase;
   font-size: 0.75rem;
+  letter-spacing: 0.08em;
 }
 
 .doc-link {
@@ -199,6 +247,10 @@ th {
   color: white;
   text-decoration: none;
   font-size: 0.85rem;
+}
+
+.doc-link:hover {
+  background: #587565;
 }
 
 /* KAART */
@@ -216,11 +268,68 @@ th {
   width: 100%;
   height: 400px;
   border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Discipline filters */
+.discipline-filters {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.discipline-filter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(106,142,121,0.08);
+  border: 1px solid rgba(106,142,121,0.25);
+}
+
+.discipline-filter-label input {
+  accent-color: var(--color-primary);
+}
+
+/* Marker met letters F / Pe / Po / O */
+.discipline-marker-wrapper {
+  /* container voor Leaflet, meestal geen extra styling nodig */
+}
+
+.discipline-marker {
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 /* FOOTER */
 footer {
-  margin: 3rem auto;
+  max-width: 1100px;
+  margin: 3rem auto 2rem;
   text-align: center;
   color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+/* LINK KLEUR */
+a {
+  color: #2f5c48;
+}
+
+a:hover {
+  text-decoration: underline;
 }

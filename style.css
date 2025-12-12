@@ -1,180 +1,462 @@
-/* ============================
-   AUTOMATISCHE HEADER OFFSET
-============================ */
-(function () {
-  const header = document.querySelector('header');
-  if (!header) return;
+:root {
+  --color-primary: #6A8E79;
+  --color-accent: #A8C3A4;
+  --color-bg: #E7EFEA;
+  --color-card: #ffffff;
+  --color-text: #2F3E36;
+  --color-muted: #6f7c75;
 
-  function updateHeaderOffset() {
-    const height = header.offsetHeight;
-    document.documentElement.style.setProperty('--header-offset', `${height + 10}px`);
+  --radius-lg: 16px;
+  --shadow-soft: 0 10px 25px rgba(0,0,0,0.08);
+
+  /* fallback header-offset; wordt door JS overschreven */
+  --header-offset: 160px;
+}
+
+/* BASIS */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  background: radial-gradient(circle at top left, #f1f6f3, var(--color-bg));
+  color: var(--color-text);
+  scroll-behavior: smooth;
+}
+
+/* Zorgen dat ankers niet achter de vaste header verdwijnen */
+section,
+details,
+.viewer,
+.map-card,
+h2[id] {
+  scroll-margin-top: var(--header-offset);
+}
+
+/* HEADER */
+header {
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(106,142,121,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+header.header-scrolled {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  border-color: rgba(106,142,121,0.4);
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.35rem 1rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+/* LOGO */
+.logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* HAMBURGER MENU */
+.nav-toggle {
+  display: none;
+  border: none;
+  background: transparent;
+  padding: 0.25rem;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-text);
+  margin: 4px 0;
+  border-radius: 999px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-toggle.nav-toggle-open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav-toggle.nav-toggle-open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle.nav-toggle-open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* NAV MENU */
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.main-nav-centered {
+  width: 100%;
+  justify-content: flex-start; /* links uitlijnen */
+}
+
+/* MENU KNOPPEN */
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(106,142,121,0.25);
+  background: rgba(106,142,121,0.08);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+/* HOVER-LIJNTJE */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.3rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  opacity: 0;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.nav-link:hover {
+  background: rgba(106,142,121,0.18);
+  border-color: rgba(106,142,121,0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ACCENT KNOP */
+.nav-link-accent {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.nav-link-accent::after {
+  background: #ffffff;
+}
+
+.nav-link-accent:hover {
+  background: #587565;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+}
+
+/* ICONEN IN MENU */
+.nav-icon svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+/* MOBIEL */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
   }
 
-  updateHeaderOffset();
-  window.addEventListener('resize', updateHeaderOffset);
-})();
-
-/* ============================
-   HEADER SCROLL EFFECT
-============================ */
-(function () {
-  const header = document.querySelector('header');
-
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 0) {
-      header.classList.add('header-scrolled');
-    } else {
-      header.classList.remove('header-scrolled');
-    }
-  });
-})();
-
-/* ============================
-   MOBIEL NAVIGATIE MENU
-============================ */
-(function () {
-  const navToggle = document.querySelector('.nav-toggle');
-  const mainNav = document.querySelector('.main-nav');
-
-  if (!navToggle || !mainNav) return;
-
-  navToggle.addEventListener('click', () => {
-    navToggle.classList.toggle('nav-toggle-open');
-    mainNav.classList.toggle('nav-open');
-  });
-})();
-
-/* ============================
-   GOOGLE DOC VIEWER
-============================ */
-(function () {
-  const viewer = document.getElementById('docViewer');
-  const placeholder = document.querySelector('.viewer-placeholder');
-  const frameWrapper = document.querySelector('.viewer-frame-wrapper');
-  const closeButton = document.getElementById('closeProtocolButton');
-
-  const links = document.querySelectorAll('a.doc-link[data-doc-url]');
-
-  // Protocol openen
-  links.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const url = link.getAttribute('data-doc-url');
-      if (!url || url === '#') return;
-
-      viewer.src = url;
-      frameWrapper.style.display = 'block';
-      placeholder.style.display = 'none';
-
-      closeButton.classList.add('visible');
-    });
-  });
-
-  // Protocol sluiten
-  closeButton.addEventListener('click', () => {
-    viewer.src = "";
-    frameWrapper.style.display = 'none';
-    placeholder.style.display = 'block';
-    closeButton.classList.remove('visible');
-  });
-})();
-
-/* ============================
-   KAART MET PRAKTIJKEN + FILTERS
-============================ */
-(function () {
-  if (typeof L === 'undefined') return;
-
-  const map = L.map('praktijkMap').setView([51.589, 4.775], 11);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '&copy; OpenStreetMap-bijdragers'
-  }).addTo(map);
-
-  // Marker labels
-  function getLabel(discipline) {
-    return {
-      'Fysiotherapeut': 'F',
-      'Pedicure': 'Pe',
-      'Podotherapeut': 'Po',
-      'Orthopedisch schoenmaker': 'O'
-    }[discipline] || '?';
+  .main-nav {
+    display: none;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
   }
 
-  const praktijken = [
-    {
-      naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
-      adres: 'Industriekade 10, Breda',
-      lat: 51.5987,
-      lng: 4.7701,
-      discipline: 'Fysiotherapeut'
-    },
-    {
-      naam: 'Monné Zorg & Beweging – Ginneken',
-      adres: 'Burgemeester Middelaerlaan 1, Breda',
-      lat: 51.5686,
-      lng: 4.7892,
-      discipline: 'Fysiotherapeut'
-    },
-    {
-      naam: 'Monné Zorg & Beweging – Breda Noord',
-      adres: 'Bernard de Wildestraat 400A, Breda',
-      lat: 51.6083,
-      lng: 4.7978,
-      discipline: 'Fysiotherapeut'
-    },
-    {
-      naam: 'Monné Zorg & Beweging – Haagse Beemden',
-      adres: 'Hondsdonk 58, Breda',
-      lat: 51.6063,
-      lng: 4.7440,
-      discipline: 'Fysiotherapeut'
-    },
-    {
-      naam: 'Monné Zorg & Beweging – Oosterhout (Vrachelen)',
-      adres: 'Merijntje Gijzenstraat 3e, Oosterhout',
-      lat: 51.6520,
-      lng: 4.8362,
-      discipline: 'Fysiotherapeut'
-    }
-  ];
-
-  const markers = [];
-
-  // Toevoegen markers
-  praktijken.forEach(p => {
-    const icon = L.divIcon({
-      html: `<div class="discipline-marker">${getLabel(p.discipline)}</div>`,
-      className: '',
-      iconSize: [30, 30],
-      iconAnchor: [15, 30]
-    });
-
-    const marker = L.marker([p.lat, p.lng], { icon })
-      .bindPopup(`<strong>${p.naam}</strong><br>${p.adres}<br>${p.discipline}`)
-      .addTo(map);
-
-    marker.discipline = p.discipline;
-    markers.push(marker);
-  });
-
-  // Discipline-filters
-  const checkboxes = document.querySelectorAll('.discipline-filters input[type="checkbox"]');
-
-  function updateMarkers() {
-    const active = new Set([...checkboxes].filter(c => c.checked).map(c => c.value));
-
-    markers.forEach(marker => {
-      if (active.has(marker.discipline)) {
-        if (!map.hasLayer(marker)) marker.addTo(map);
-      } else {
-        if (map.hasLayer(marker)) map.removeLayer(marker);
-      }
-    });
+  .main-nav.nav-open {
+    display: flex;
   }
 
-  checkboxes.forEach(cb => cb.addEventListener('change', updateMarkers));
+  .nav-link {
+    width: 100%;
+  }
+}
 
-  updateMarkers();
-})();
+/* MAIN */
+main {
+  max-width: 1100px;
+  margin: 2rem auto 3rem;
+  padding: 0 1.25rem;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(
+    135deg,
+    rgba(106,142,121,0.08),
+    rgba(168,195,164,0.06)
+  );
+  border-radius: 24px;
+  padding: 2.3rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  margin-top: 0;
+  color: var(--color-primary);
+}
+
+.hero p {
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+/* PILLS */
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.pill {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(106,142,121,0.15);
+  border: 1px solid rgba(106,142,121,0.3);
+  font-size: 0.85rem;
+}
+
+/* CTA BUTTON */
+.primary-button-wrapper {
+  margin-top: 1.5rem;
+}
+
+.primary-button {
+  padding: 0.7rem 1.6rem;
+  background: var(--color-primary);
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.primary-button:hover {
+  background: #587565;
+}
+
+/* TITELS */
+.section-title {
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+}
+
+.section-title.small {
+  font-size: 1.3rem;
+}
+
+/* VIEWER */
+.viewer {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background: var(--color-card);
+  border-radius: 20px;
+  border: 1px solid rgba(106,142,121,0.25);
+  box-shadow: var(--shadow-soft);
+}
+
+.viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.viewer-placeholder {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.viewer-frame-wrapper {
+  display: none;
+  margin-top: 1rem;
+}
+
+.viewer-frame-wrapper iframe {
+  width: 100%;
+  height: 600px;
+  border-radius: 16px;
+  border: none;
+}
+
+/* SLUIT PROTOCOL BUTTON */
+.close-protocol-button {
+  display: none;
+  padding: 0.4rem 1.1rem;
+  background: #C96868;
+  color: white;
+  border-radius: 999px;
+  border: 1px solid rgba(120,40,40,0.2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.close-protocol-button.visible {
+  display: inline-flex;
+}
+
+.close-protocol-button:hover {
+  background: #B15353;
+}
+
+/* ACCORDIONS */
+details {
+  background: #fff;
+  border: 1px solid rgba(106,142,121,0.25);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+summary {
+  list-style: none;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* TABEL */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th {
+  background: rgba(106,142,121,0.15);
+  padding: 0.7rem;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+td {
+  padding: 0.7rem;
+  border-bottom: 1px solid #d5ddd9;
+}
+
+.doc-link {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.doc-link:hover {
+  background: #587565;
+}
+
+/* KAART */
+.map-card {
+  margin-top: 3rem;
+  background: var(--color-card);
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(106,142,121,0.25);
+}
+
+#praktijkMap {
+  width: 100%;
+  height: 400px;
+  border-radius: 16px;
+  margin-top: 1rem;
+}
+
+/* DISCIPLINE FILTERS */
+.discipline-filters {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.discipline-filter-label {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(106,142,121,0.08);
+  border: 1px solid rgba(106,142,121,0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.discipline-filter-label input {
+  accent-color: var(--color-primary);
+}
+
+/* MARKERS */
+.discipline-marker {
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FOOTER */
+footer {
+  max-width: 1100px;
+  margin: 3rem auto 2rem;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+/* LINKS */
+a {
+  color: #2f5c48;
+}
+
+a:hover {
+  text-decoration: underline;
+}

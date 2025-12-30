@@ -1,3 +1,5 @@
+/* script.js */
+
 /* ============================
    AUTOMATISCHE HEADER OFFSET
 ============================ */
@@ -202,7 +204,7 @@
       }
     });
 
-    // — initieel: icoon met alle disciplines, wordt later door updateMarkers aangepast —
+    // initieel: icoon met alle disciplines, wordt later door updateMarkers aangepast
     var blocksHtml = uniqueDisciplines.map(function (d) {
       var label = getLabel(d);
       var dClass = getDisciplineClass(d);
@@ -255,7 +257,7 @@
         return activeSet.has(d);
       });
 
-      // als geen enkele discipline voor deze marker actief is → marker verbergen
+      // als geen enkele discipline voor deze marker actief is -> marker verbergen
       if (activeForMarker.length === 0) {
         if (map.hasLayer(marker)) {
           map.removeLayer(marker);

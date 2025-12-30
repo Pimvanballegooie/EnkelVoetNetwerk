@@ -1,3 +1,4 @@
+/* style.css */
 :root {
   --color-primary: #6A8E79;
   --color-accent: #A8C3A4;
@@ -434,61 +435,3 @@ td {
 .discipline-marker-group {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 2px;
-  border-radius: 999px;
-  background: #ffffff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-.discipline-marker {
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  color: #ffffff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Kleuren per discipline */
-.discipline-marker--fysio {
-  background: #6A8E79;
-}
-
-.discipline-marker--pedicure {
-  background: #C97A95; /* zacht roze/rood */
-}
-
-.discipline-marker--podo {
-  background: #E0A72E; /* warm geel/oranje */
-}
-
-.discipline-marker--os {
-  background: #4F82C0; /* blauw */
-}
-
-.discipline-marker--default {
-  background: #666666;
-}
-
-/* FOOTER */
-footer {
-  max-width: 1100px;
-  margin: 3rem auto 2rem;
-  text-align: center;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
-/* LINKS */
-a {
-  color: #2f5c48;
-}
-
-a:hover {
-  text-decoration: underline;
-}

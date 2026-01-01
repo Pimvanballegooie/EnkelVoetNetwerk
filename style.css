@@ -542,3 +542,59 @@ a:hover {
   }
 }
 ```
+/* =========================
+   FIX: NAV "LOCATIE WORDEN"
+   + FIX: DOC-LINK KNOPPEN
+========================= */
+
+/* Zorg dat nav-items nooit 'leeg' lijken door clipping */
+.main-nav {
+  overflow: visible;
+}
+
+/* Extra zekerheid: accent-link blijft leesbaar */
+.nav-link-accent,
+.nav-link-accent:visited {
+  color: #ffffff;
+}
+
+.nav-link-accent span {
+  color: inherit;
+}
+
+/* SVG moet currentColor volgen */
+.nav-link .nav-icon svg {
+  fill: currentColor;
+}
+
+/* DOC-LINKS altijd als knop (niet als gewone link) */
+a.doc-link,
+a.doc-link:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1;
+}
+
+a.doc-link:hover {
+  background: #587565;
+  text-decoration: none;
+}
+
+/* Focus zichtbaar (toegankelijkheid) */
+.nav-link:focus-visible,
+a.doc-link:focus-visible,
+.primary-button:focus-visible,
+.close-protocol-button:focus-visible {
+  outline: 3px solid rgba(106, 142, 121, 0.55);
+  outline-offset: 3px;
+}
+
+

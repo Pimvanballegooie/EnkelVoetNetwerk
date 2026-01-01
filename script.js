@@ -1,3 +1,4 @@
+```js
 /* script.js */
 
 /* ============================
@@ -58,21 +59,31 @@
 
   if (!viewer || !placeholder || !frameWrapper || !closeButton) return;
 
-  var links = document.querySelectorAll('a.doc-link[data-doc-url]');
+  function bindDocLinks(root) {
+    var links = root.querySelectorAll('a.doc-link[data-doc-url]');
+    links.forEach(function (link) {
+      // voorkom dubbel binden
+      if (link.dataset.bound === '1') return;
+      link.dataset.bound = '1';
 
-  // Protocol openen
-  links.forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      var url = link.getAttribute('data-doc-url');
-      if (!url || url === '#') return;
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var url = link.getAttribute('data-doc-url');
+        if (!url || url === '#') return;
 
-      viewer.src = url;
-      frameWrapper.style.display = 'block';
-      placeholder.style.display = 'none';
-      closeButton.classList.add('visible');
+        viewer.src = url;
+        frameWrapper.style.display = 'block';
+        placeholder.style.display = 'none';
+        closeButton.classList.add('visible');
+
+        // viewer in beeld brengen (fijn voor toetsenbord/voorlezen)
+        frameWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
-  });
+  }
+
+  // init
+  bindDocLinks(document);
 
   // Protocol sluiten
   closeButton.addEventListener('click', function () {
@@ -90,7 +101,6 @@
    - Per discipline aan/uit binnen hetzelfde icoon
 ============================ */
 (function () {
-  // Check of Leaflet en kaartcontainer aanwezig zijn
   if (typeof L === 'undefined') return;
 
   var mapElement = document.getElementById('praktijkMap');
@@ -103,7 +113,6 @@
     attribution: '© OpenStreetMap-bijdragers'
   }).addTo(map);
 
-  // Label op de blokjes
   function getLabel(discipline) {
     var mapDisc = {
       'Fysiotherapeut': 'F',
@@ -114,7 +123,6 @@
     return mapDisc[discipline] || '?';
   }
 
-  // CSS-klasse per discipline (voor kleur in CSS)
   function getDisciplineClass(discipline) {
     var mapClass = {
       'Fysiotherapeut': 'fysio',
@@ -126,8 +134,6 @@
   }
 
   // ---- LOCATIES ----
-  // Extra discipline op dezelfde locatie? Voeg gewoon een extra object toe
-  // met dezelfde lat/lng + andere discipline.
   var praktijken = [
     {
       naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
@@ -178,25 +184,17 @@
   praktijken.forEach(function (p) {
     var key = p.lat + ',' + p.lng;
     if (!groupsByLocation[key]) {
-      groupsByLocation[key] = {
-        lat: p.lat,
-        lng: p.lng,
-        items: []
-      };
+      groupsByLocation[key] = { lat: p.lat, lng: p.lng, items: [] };
     }
     groupsByLocation[key].items.push(p);
   });
 
   var markers = [];
 
-  // Voor elke unieke locatie één marker met alle disciplines
   Object.keys(groupsByLocation).forEach(function (key) {
     var group = groupsByLocation[key];
-    var lat = group.lat;
-    var lng = group.lng;
     var items = group.items;
 
-    // Unieke disciplines bepalen
     var uniqueDisciplines = [];
     items.forEach(function (item) {
       if (uniqueDisciplines.indexOf(item.discipline) === -1) {
@@ -204,7 +202,6 @@
       }
     });
 
-    // initieel: icoon met alle disciplines, wordt later door updateMarkers aangepast
     var blocksHtml = uniqueDisciplines.map(function (d) {
       var label = getLabel(d);
       var dClass = getDisciplineClass(d);
@@ -221,17 +218,15 @@
       iconAnchor: [iconWidth / 2, 26]
     });
 
-    // Popuptekst met alle namen + disciplines
     var popupLines = items.map(function (i) {
       return '<strong>' + i.naam + '</strong><br>' + i.adres + '<br>' + i.discipline;
     });
     var popupHtml = popupLines.join('<hr style="margin:4px 0;" />');
 
-    var marker = L.marker([lat, lng], { icon: icon })
+    var marker = L.marker([group.lat, group.lng], { icon: icon })
       .bindPopup(popupHtml)
       .addTo(map);
 
-    // Bewaar alle disciplines van deze marker voor filtering
     marker.disciplines = uniqueDisciplines;
     markers.push(marker);
   });
@@ -242,35 +237,24 @@
   function updateMarkers() {
     if (!checkboxes.length) return;
 
-    // actieve disciplines (global)
     var active = [];
     checkboxes.forEach(function (cb) {
-      if (cb.checked) {
-        active.push(cb.value);
-      }
+      if (cb.checked) active.push(cb.value);
     });
     var activeSet = new Set(active);
 
     markers.forEach(function (marker) {
-      // voor deze marker: welke disciplines zijn actief?
       var activeForMarker = marker.disciplines.filter(function (d) {
         return activeSet.has(d);
       });
 
-      // als geen enkele discipline voor deze marker actief is -> marker verbergen
       if (activeForMarker.length === 0) {
-        if (map.hasLayer(marker)) {
-          map.removeLayer(marker);
-        }
+        if (map.hasLayer(marker)) map.removeLayer(marker);
         return;
       }
 
-      // marker moet zichtbaar zijn
-      if (!map.hasLayer(marker)) {
-        marker.addTo(map);
-      }
+      if (!map.hasLayer(marker)) marker.addTo(map);
 
-      // icoon opnieuw opbouwen op basis van alleen de ACTIEVE disciplines
       var blocksHtml = activeForMarker.map(function (d) {
         var label = getLabel(d);
         var dClass = getDisciplineClass(d);
@@ -295,6 +279,6 @@
     cb.addEventListener('change', updateMarkers);
   });
 
-  // initiale sync: gebruikt de huidige checkbox-stand
   updateMarkers();
 })();
+```

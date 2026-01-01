@@ -736,3 +736,45 @@ a.nav-link.nav-link-accent:hover {
   text-decoration: none;
 }
 
+/* ====== HARD FIX: knoppen nooit wit/transparent ====== */
+
+/* 1) Locatie worden knop altijd zichtbaar */
+nav.main-nav a.nav-link.nav-link-accent,
+nav.main-nav a.nav-link.nav-link-accent:visited,
+nav.main-nav a.nav-link.nav-link-accent:active {
+  background: var(--color-primary) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-decoration: none !important;
+}
+
+nav.main-nav a.nav-link.nav-link-accent * {
+  color: #ffffff !important;
+}
+
+nav.main-nav a.nav-link.nav-link-accent svg {
+  fill: currentColor !important;
+}
+
+/* 2) Open-knoppen altijd zichtbaar */
+table a.doc-link,
+table a.doc-link:visited,
+table a.doc-link:active {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-decoration: none !important;
+}
+
+/* 3) Als er ergens 'a { color: ... }' staat, voorkom dat die buttons weer overschrijft */
+table a.doc-link:hover,
+nav.main-nav a.nav-link.nav-link-accent:hover {
+  text-decoration: none !important;
+}
+

@@ -1,5 +1,8 @@
-```css
-/* style.css */
+/* style.css (CLEAN + FIXED) */
+
+/* =========================
+   THEME
+========================= */
 :root {
   --color-primary: #6A8E79;
   --color-accent: #A8C3A4;
@@ -15,7 +18,9 @@
   --header-offset: 160px;
 }
 
-/* BASIS */
+/* =========================
+   RESET / BASE
+========================= */
 *,
 *::before,
 *::after {
@@ -40,7 +45,53 @@ h2[id] {
   scroll-margin-top: var(--header-offset);
 }
 
-/* HEADER (boven alles) */
+/* Algemene links (NIET voor knoppen) */
+a {
+  color: #2f5c48;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   A11Y: Skip link
+   (standaard uit beeld, alleen zichtbaar bij focus)
+========================= */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 2000;
+
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 2px solid rgba(106, 142, 121, 0.6);
+  color: var(--color-text);
+  text-decoration: none;
+
+  /* verbergen */
+  transform: translateY(-160%);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  outline: none;
+}
+
+/* =========================
+   HEADER
+========================= */
 header {
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(10px);
@@ -80,7 +131,7 @@ header.header-scrolled {
   display: block;
 }
 
-/* HAMBURGER MENU */
+/* HAMBURGER */
 .nav-toggle {
   display: none;
   border: none;
@@ -116,6 +167,7 @@ header.header-scrolled {
   flex-wrap: wrap;
   gap: 0.6rem;
   width: 100%;
+  overflow: visible;
 }
 
 .main-nav-centered {
@@ -123,19 +175,23 @@ header.header-scrolled {
   justify-content: flex-start;
 }
 
-/* MENU KNOPPEN */
-.nav-link {
+/* NAV LINKS (zijn knoppen -> géén underline) */
+.nav-link,
+.nav-link:visited {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+
   padding: 0.55rem 1.15rem;
   border-radius: 999px;
   border: 1px solid rgba(106, 142, 121, 0.25);
   background: rgba(106, 142, 121, 0.08);
+
   font-size: 0.95rem;
   color: var(--color-text);
   text-decoration: none;
+
   transition: all 0.15s ease;
 }
 
@@ -164,26 +220,29 @@ header.header-scrolled {
   border-color: rgba(106, 142, 121, 0.45);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-decoration: none;
 }
 
-/* ACCENT KNOP */
-.nav-link-accent {
+/* ACCENT KNOP (Locatie worden) */
+.nav-link-accent,
+.nav-link-accent:visited,
+.nav-link-accent:active {
   background: var(--color-primary);
   color: #ffffff;
   border-color: transparent;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  text-decoration: none;
 }
 
 .nav-link-accent::after {
   background: #ffffff;
 }
 
-.nav-link-accent:hover {
-  background: #587565;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+/* Forceer dat tekst en iconen wit blijven */
+.nav-link-accent * {
+  color: #ffffff;
 }
 
-/* ICONEN IN MENU */
 .nav-icon svg {
   width: 17px;
   height: 17px;
@@ -212,7 +271,9 @@ header.header-scrolled {
   }
 }
 
-/* MAIN LAYOUT */
+/* =========================
+   MAIN LAYOUT
+========================= */
 main {
   max-width: 1100px;
   margin: 2rem auto 3rem;
@@ -262,11 +323,12 @@ main {
   margin-top: 1.5rem;
 }
 
-.primary-button {
+.primary-button,
+.primary-button:visited {
   padding: 0.7rem 1.6rem;
   background: var(--color-primary);
   border-radius: 999px;
-  color: #fff;
+  color: #ffffff;
   font-weight: 600;
   text-decoration: none;
   display: inline-block;
@@ -289,7 +351,9 @@ main {
   font-size: 1.3rem;
 }
 
-/* VIEWER */
+/* =========================
+   VIEWER
+========================= */
 .viewer {
   margin-top: 2.5rem;
   padding: 1.5rem;
@@ -328,7 +392,7 @@ main {
   display: none;
   padding: 0.4rem 1.1rem;
   background: #C96868;
-  color: white;
+  color: #ffffff;
   border-radius: 999px;
   border: 1px solid rgba(120, 40, 40, 0.2);
   cursor: pointer;
@@ -341,9 +405,11 @@ main {
   display: inline-flex;
 }
 
-/* ACCORDIONS */
+/* =========================
+   ACCORDIONS
+========================= */
 details {
-  background: #fff;
+  background: #ffffff;
   border: 1px solid rgba(106, 142, 121, 0.25);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-soft);
@@ -361,7 +427,6 @@ summary {
   gap: 1rem;
 }
 
-/* klein pijltje rechts (pure CSS) */
 summary::after {
   content: "›";
   transform: rotate(90deg);
@@ -380,7 +445,9 @@ details[open] summary::after {
   margin-bottom: 0.75rem;
 }
 
-/* TABEL */
+/* =========================
+   TABLE
+========================= */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -406,28 +473,34 @@ tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* DOC LINK BUTTON */
-.doc-link {
-  display: inline-block;
-  padding: 0.35rem 0.9rem;
+/* DOC LINK BUTTON (Open) */
+a.doc-link,
+a.doc-link:visited,
+a.doc-link:active {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 72px;
+  padding: 0.4rem 1rem;
   border-radius: 999px;
+
   background: var(--color-primary);
   color: #ffffff;
-  font-size: 0.85rem;
   text-decoration: none;
+  font-weight: 600;
+  line-height: 1;
   white-space: nowrap;
 }
 
-.doc-link:hover {
+a.doc-link:hover {
   background: #587565;
   text-decoration: none;
 }
 
-.doc-link:visited {
-  color: #ffffff;
-}
-
-/* KAART */
+/* =========================
+   MAP
+========================= */
 .map-card {
   margin-top: 3rem;
   background: var(--color-card);
@@ -437,7 +510,6 @@ tbody tr:last-child td {
   border: 1px solid rgba(106, 142, 121, 0.25);
 }
 
-/* kaart altijd onder header */
 .leaflet-container,
 #praktijkMap {
   position: relative;
@@ -476,7 +548,7 @@ tbody tr:last-child td {
   accent-color: var(--color-primary);
 }
 
-/* DISCIPLINE MARKER GROUP & BLOKKEN */
+/* MAP MARKERS */
 .discipline-marker-group {
   display: flex;
   align-items: center;
@@ -500,14 +572,15 @@ tbody tr:last-child td {
   justify-content: center;
 }
 
-/* Kleuren per discipline */
 .discipline-marker--fysio { background: #6A8E79; }
 .discipline-marker--pedicure { background: #C97A95; }
 .discipline-marker--podo { background: #E0A72E; }
 .discipline-marker--os { background: #4F82C0; }
 .discipline-marker--default { background: #666666; }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 footer {
   max-width: 1100px;
   margin: 3rem auto 2rem;
@@ -517,16 +590,21 @@ footer {
   font-size: 0.9rem;
 }
 
-/* LINKS */
-a {
-  color: #2f5c48;
+/* =========================
+   FOCUS (toegankelijkheid)
+========================= */
+.nav-link:focus-visible,
+a.doc-link:focus-visible,
+.primary-button:focus-visible,
+.close-protocol-button:focus-visible,
+.nav-toggle:focus-visible {
+  outline: 3px solid rgba(106, 142, 121, 0.55);
+  outline-offset: 3px;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-/* RESPONSIVE TABLE (mobiel) */
+/* =========================
+   RESPONSIVE TABLE (mobiel)
+========================= */
 @media (max-width: 640px) {
   th:nth-child(2),
   th:nth-child(3),
@@ -541,240 +619,3 @@ a:hover {
     height: 520px;
   }
 }
-```
-/* =========================
-   FIX: NAV "LOCATIE WORDEN"
-   + FIX: DOC-LINK KNOPPEN
-========================= */
-
-/* Zorg dat nav-items nooit 'leeg' lijken door clipping */
-.main-nav {
-  overflow: visible;
-}
-
-/* Extra zekerheid: accent-link blijft leesbaar */
-.nav-link-accent,
-.nav-link-accent:visited {
-  color: #ffffff;
-}
-
-.nav-link-accent span {
-  color: inherit;
-}
-
-/* SVG moet currentColor volgen */
-.nav-link .nav-icon svg {
-  fill: currentColor;
-}
-
-/* DOC-LINKS altijd als knop (niet als gewone link) */
-a.doc-link,
-a.doc-link:visited {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 72px;
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  background: var(--color-primary);
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: 600;
-  line-height: 1;
-}
-
-a.doc-link:hover {
-  background: #587565;
-  text-decoration: none;
-}
-
-/* Focus zichtbaar (toegankelijkheid) */
-.nav-link:focus-visible,
-a.doc-link:focus-visible,
-.primary-button:focus-visible,
-.close-protocol-button:focus-visible {
-  outline: 3px solid rgba(106, 142, 121, 0.55);
-  outline-offset: 3px;
-}
-
-/* =========================
-   A11Y: skip-link (niet zichtbaar, wel bij focus)
-========================= */
-.skip-link {
-  position: absolute;
-  left: 12px;
-  top: 12px;
-  z-index: 2000;
-  padding: 0.6rem 0.9rem;
-  border-radius: 999px;
-  background: #ffffff;
-  border: 2px solid var(--color-primary);
-  color: var(--color-text);
-  text-decoration: none;
-
-  /* verbergen */
-  transform: translateY(-140%);
-  opacity: 0;
-  pointer-events: none;
-
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.skip-link:focus,
-.skip-link:focus-visible {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-  outline: none;
-}
-
-/* =========================
-   Knoppen forceren zichtbaar
-   (voorkomt overschrijven door algemene a{} regels)
-========================= */
-
-/* locatie-worden knop */
-a.nav-link.nav-link-accent,
-.nav-link-accent {
-  background: var(--color-primary) !important;
-  color: #ffffff !important;
-  border-color: transparent !important;
-}
-
-/* open-knoppen */
-a.doc-link,
-.doc-link {
-  display: inline-block !important;
-  background: var(--color-primary) !important;
-  color: #ffffff !important;
-  text-decoration: none !important;
-  border: 0 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-a.doc-link:visited {
-  color: #ffffff !important;
-}
-
-a.doc-link:hover,
-a.nav-link.nav-link-accent:hover {
-  background: #587565 !important;
-}
-
-/* Als je ergens per ongeluk alle svg's transparant hebt gemaakt */
-.nav-icon svg {
-  fill: currentColor;
-  opacity: 1;
-}
-
-/* =========================
-   FIX: buttons die "wit" worden (nav-link-accent + doc-link)
-   Zet dit ONDERAAN je style.css
-========================= */
-
-/* Skip-link: niet in beeld, wel zichtbaar bij toetsenbord */
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 8px;
-  padding: 0.6rem 0.9rem;
-  border-radius: 10px;
-  background: #ffffff;
-  border: 2px solid rgba(106, 142, 121, 0.6);
-  color: var(--color-text);
-  z-index: 2000;
-}
-.skip-link:focus {
-  left: 12px;
-}
-
-/* Basis: maak nav-links altijd “button-achtig” zichtbaar */
-.nav-link,
-.nav-link:visited {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  color: var(--color-text);
-  text-decoration: none;
-  background: rgba(106, 142, 121, 0.08);
-}
-
-/* Accent knop: forceer achtergrond + tekst + iconen, ook bij visited */
-.nav-link-accent,
-.nav-link-accent:visited {
-  background: var(--color-primary) !important;
-  border-color: transparent !important;
-  color: #ffffff !important;
-}
-
-/* Belangrijk: ook child-elements (span, svg) wit maken */
-.nav-link-accent * {
-  color: #ffffff !important;
-}
-.nav-link-accent svg {
-  fill: currentColor !important;
-}
-
-/* Doc-link: forceer altijd kleur + background, ook bij visited */
-.doc-link,
-.doc-link:visited {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.35rem 0.9rem;
-  border-radius: 999px;
-  background: var(--color-primary) !important;
-  color: #ffffff !important;
-  text-decoration: none !important;
-  white-space: nowrap;
-}
-
-/* Hover blijft hetzelfde, maar nu is default ook goed zichtbaar */
-.doc-link:hover,
-.nav-link:hover {
-  text-decoration: none;
-}
-
-/* ====== HARD FIX: knoppen nooit wit/transparent ====== */
-
-/* 1) Locatie worden knop altijd zichtbaar */
-nav.main-nav a.nav-link.nav-link-accent,
-nav.main-nav a.nav-link.nav-link-accent:visited,
-nav.main-nav a.nav-link.nav-link-accent:active {
-  background: var(--color-primary) !important;
-  border-color: transparent !important;
-  color: #ffffff !important;
-  opacity: 1 !important;
-  filter: none !important;
-  text-decoration: none !important;
-}
-
-nav.main-nav a.nav-link.nav-link-accent * {
-  color: #ffffff !important;
-}
-
-nav.main-nav a.nav-link.nav-link-accent svg {
-  fill: currentColor !important;
-}
-
-/* 2) Open-knoppen altijd zichtbaar */
-table a.doc-link,
-table a.doc-link:visited,
-table a.doc-link:active {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: var(--color-primary) !important;
-  color: #ffffff !important;
-  opacity: 1 !important;
-  filter: none !important;
-  text-decoration: none !important;
-}
-
-/* 3) Als er ergens 'a { color: ... }' staat, voorkom dat die buttons weer overschrijft */
-table a.doc-link:hover,
-nav.main-nav a.nav-link.nav-link-accent:hover {
-  text-decoration: none !important;
-}
-

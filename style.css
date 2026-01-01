@@ -619,3 +619,119 @@ a.doc-link:focus-visible,
     height: 520px;
   }
 }
+
+/* =========================
+   TTS in NAV (bovenbalk)
+========================= */
+
+.nav-tools {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.tts-toggle,
+.tts-toggle:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  background: rgba(106, 142, 121, 0.08);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tts-toggle:hover {
+  background: rgba(106, 142, 121, 0.18);
+  border-color: rgba(106, 142, 121, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tts-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 260px;
+  padding: 0.9rem;
+  background: #ffffff;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  z-index: 1500;
+}
+
+.tts-label {
+  grid-column: 1 / -1;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+#ttsRate {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.tts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  background: var(--color-primary);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tts-btn:hover {
+  background: #587565;
+}
+
+.tts-btn-secondary {
+  background: #ffffff;
+  color: var(--color-text);
+}
+
+.tts-btn-secondary:hover {
+  background: rgba(106, 142, 121, 0.08);
+}
+
+.tts-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* sr-only helper (als je deze nog niet had) */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Mobiel: maak de panel netjes breed en onder elkaar */
+@media (max-width: 768px) {
+  .tts-panel {
+    right: auto;
+    left: 0;
+    width: 100%;
+    min-width: 0;
+  }
+}
+

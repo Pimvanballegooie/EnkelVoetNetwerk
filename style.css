@@ -1,8 +1,5 @@
-/* style.css (CLEAN + FIXED) */
-
-/* =========================
-   THEME
-========================= */
+```css
+/* style.css */
 :root {
   --color-primary: #6A8E79;
   --color-accent: #A8C3A4;
@@ -12,19 +9,23 @@
   --color-muted: #6f7c75;
 
   --radius-lg: 16px;
-  --shadow-soft: 0 10px 25px rgba(0,0,0,0.08);
+  --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
 
   /* fallback header-offset; wordt door JS overschreven */
   --header-offset: 160px;
 }
 
 /* =========================
-   RESET / BASE
+   BASIS
 ========================= */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -45,52 +46,42 @@ h2[id] {
   scroll-margin-top: var(--header-offset);
 }
 
-/* Algemene links (NIET voor knoppen) */
-a {
-  color: #2f5c48;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-a:hover {
-  text-decoration: underline;
+/* Screenreader-only */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 /* =========================
-   A11Y: Skip link
-   (standaard uit beeld, alleen zichtbaar bij focus)
+   SKIP LINK (alleen zichtbaar bij toetsenbord-focus)
 ========================= */
 .skip-link {
   position: absolute;
-  left: 12px;
-  top: 12px;
-  z-index: 2000;
-
+  left: -9999px;
+  top: 10px;
   padding: 0.6rem 0.9rem;
   border-radius: 999px;
   background: #ffffff;
   border: 2px solid rgba(106, 142, 121, 0.6);
   color: var(--color-text);
   text-decoration: none;
-
-  /* verbergen */
-  transform: translateY(-160%);
-  opacity: 0;
-  pointer-events: none;
-
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  z-index: 2000;
 }
-
 .skip-link:focus,
 .skip-link:focus-visible {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
+  left: 12px;
   outline: none;
 }
 
 /* =========================
-   HEADER
+   HEADER / NAV
 ========================= */
 header {
   background: rgba(255, 255, 255, 0.96);
@@ -103,7 +94,7 @@ header {
 }
 
 header.header-scrolled {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   border-color: rgba(106, 142, 121, 0.4);
 }
 
@@ -131,7 +122,7 @@ header.header-scrolled {
   display: block;
 }
 
-/* HAMBURGER */
+/* HAMBURGER MENU */
 .nav-toggle {
   display: none;
   border: none;
@@ -161,13 +152,13 @@ header.header-scrolled {
   transform: translateY(-6px) rotate(-45deg);
 }
 
-/* MENU */
+/* NAV */
 .main-nav {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
   width: 100%;
-  overflow: visible;
+  overflow: visible; /* voorkomt 'clipping' van knoppen */
 }
 
 .main-nav-centered {
@@ -175,23 +166,20 @@ header.header-scrolled {
   justify-content: flex-start;
 }
 
-/* NAV LINKS (zijn knoppen -> géén underline) */
+/* NAV LINKS */
 .nav-link,
 .nav-link:visited {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-
   padding: 0.55rem 1.15rem;
   border-radius: 999px;
   border: 1px solid rgba(106, 142, 121, 0.25);
   background: rgba(106, 142, 121, 0.08);
-
   font-size: 0.95rem;
   color: var(--color-text);
   text-decoration: none;
-
   transition: all 0.15s ease;
 }
 
@@ -219,34 +207,44 @@ header.header-scrolled {
   background: rgba(106, 142, 121, 0.18);
   border-color: rgba(106, 142, 121, 0.45);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-decoration: none;
 }
 
-/* ACCENT KNOP (Locatie worden) */
+/* ACCENT LINK (Locatie worden) */
 .nav-link-accent,
 .nav-link-accent:visited,
 .nav-link-accent:active {
-  background: var(--color-primary);
-  color: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  text-decoration: none;
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-decoration: none !important;
 }
 
 .nav-link-accent::after {
   background: #ffffff;
 }
 
-/* Forceer dat tekst en iconen wit blijven */
-.nav-link-accent * {
-  color: #ffffff;
+.nav-link-accent:hover {
+  background: #587565 !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
 }
 
+.nav-link-accent * {
+  color: #ffffff !important;
+}
+
+.nav-link-accent svg {
+  fill: currentColor !important;
+}
+
+/* ICONEN IN MENU */
 .nav-icon svg {
   width: 17px;
   height: 17px;
   fill: currentColor;
+  opacity: 1;
 }
 
 /* MOBIEL */
@@ -268,6 +266,121 @@ header.header-scrolled {
 
   .nav-link {
     width: 100%;
+  }
+}
+
+/* =========================
+   VOORLEZEN IN NAV - PANEEL DUWT CONTENT OMLAAG
+   (geen absolute positioning)
+========================= */
+
+/* Verwacht: je hebt in je index een wrapper zoals:
+   <div class="nav-tools">
+     <button class="tts-toggle" ...>Voorlezen</button>
+     <div class="tts-panel" hidden>...</div>
+   </div>
+   In jouw index zit dit al / of komt via jouw JS.
+*/
+.nav-tools {
+  display: flex;
+  flex-direction: column; /* knop boven, paneel eronder */
+  align-items: flex-end;  /* rechts uitlijnen */
+  gap: 0.5rem;
+}
+
+/* De "Voorlezen" knop in de nav */
+.tts-toggle,
+.tts-toggle:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  background: rgba(106, 142, 121, 0.08);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tts-toggle:hover {
+  background: rgba(106, 142, 121, 0.18);
+  border-color: rgba(106, 142, 121, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Paneel: NIET zweven, maar meeschuiven in header */
+.tts-panel {
+  position: static;
+  width: 320px;
+  max-width: 90vw;
+  padding: 0.9rem;
+  background: #ffffff;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.tts-label {
+  grid-column: 1 / -1;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+#ttsRate {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.tts-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  background: var(--color-primary);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tts-btn:hover {
+  background: #587565;
+}
+
+.tts-btn-secondary {
+  background: #ffffff;
+  color: var(--color-text);
+}
+
+.tts-btn-secondary:hover {
+  background: rgba(106, 142, 121, 0.08);
+}
+
+.tts-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Mobiel: paneel volle breedte */
+@media (max-width: 768px) {
+  .nav-tools {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .tts-panel {
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -329,9 +442,11 @@ main {
   background: var(--color-primary);
   border-radius: 999px;
   color: #ffffff;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .primary-button:hover {
@@ -351,9 +466,7 @@ main {
   font-size: 1.3rem;
 }
 
-/* =========================
-   VIEWER
-========================= */
+/* VIEWER */
 .viewer {
   margin-top: 2.5rem;
   padding: 1.5rem;
@@ -396,18 +509,16 @@ main {
   border-radius: 999px;
   border: 1px solid rgba(120, 40, 40, 0.2);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.85rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .close-protocol-button.visible {
   display: inline-flex;
 }
 
-/* =========================
-   ACCORDIONS
-========================= */
+/* ACCORDIONS */
 details {
   background: #ffffff;
   border: 1px solid rgba(106, 142, 121, 0.25);
@@ -420,13 +531,14 @@ details {
 summary {
   list-style: none;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
 }
 
+/* klein pijltje rechts */
 summary::after {
   content: "›";
   transform: rotate(90deg);
@@ -445,9 +557,7 @@ details[open] summary::after {
   margin-bottom: 0.75rem;
 }
 
-/* =========================
-   TABLE
-========================= */
+/* TABEL */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -474,33 +584,30 @@ tbody tr:last-child td {
 }
 
 /* DOC LINK BUTTON (Open) */
-a.doc-link,
-a.doc-link:visited,
-a.doc-link:active {
+.doc-link,
+.doc-link:visited {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   min-width: 72px;
-  padding: 0.4rem 1rem;
+  padding: 0.35rem 0.9rem;
   border-radius: 999px;
-
-  background: var(--color-primary);
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: 600;
-  line-height: 1;
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none !important;
   white-space: nowrap;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-a.doc-link:hover {
-  background: #587565;
-  text-decoration: none;
+.doc-link:hover {
+  background: #587565 !important;
+  text-decoration: none !important;
 }
 
-/* =========================
-   MAP
-========================= */
+/* KAART */
 .map-card {
   margin-top: 3rem;
   background: var(--color-card);
@@ -510,6 +617,7 @@ a.doc-link:hover {
   border: 1px solid rgba(106, 142, 121, 0.25);
 }
 
+/* kaart altijd onder header */
 .leaflet-container,
 #praktijkMap {
   position: relative;
@@ -548,7 +656,7 @@ a.doc-link:hover {
   accent-color: var(--color-primary);
 }
 
-/* MAP MARKERS */
+/* DISCIPLINE MARKER GROUP & BLOKKEN */
 .discipline-marker-group {
   display: flex;
   align-items: center;
@@ -557,7 +665,7 @@ a.doc-link:hover {
   padding: 2px;
   border-radius: 999px;
   background: #ffffff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .discipline-marker {
@@ -566,12 +674,13 @@ a.doc-link:hover {
   border-radius: 999px;
   color: #ffffff;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* Kleuren per discipline */
 .discipline-marker--fysio { background: #6A8E79; }
 .discipline-marker--pedicure { background: #C97A95; }
 .discipline-marker--podo { background: #E0A72E; }
@@ -579,8 +688,19 @@ a.doc-link:hover {
 .discipline-marker--default { background: #666666; }
 
 /* =========================
-   FOOTER
+   FOCUS (toegankelijkheid)
 ========================= */
+.nav-link:focus-visible,
+.doc-link:focus-visible,
+.primary-button:focus-visible,
+.close-protocol-button:focus-visible,
+.tts-toggle:focus-visible,
+.tts-btn:focus-visible {
+  outline: 3px solid rgba(106, 142, 121, 0.55);
+  outline-offset: 3px;
+}
+
+/* FOOTER */
 footer {
   max-width: 1100px;
   margin: 3rem auto 2rem;
@@ -590,21 +710,16 @@ footer {
   font-size: 0.9rem;
 }
 
-/* =========================
-   FOCUS (toegankelijkheid)
-========================= */
-.nav-link:focus-visible,
-a.doc-link:focus-visible,
-.primary-button:focus-visible,
-.close-protocol-button:focus-visible,
-.nav-toggle:focus-visible {
-  outline: 3px solid rgba(106, 142, 121, 0.55);
-  outline-offset: 3px;
+/* LINKS (alleen algemene links, knoppen zijn hierboven geforceerd) */
+a {
+  color: #2f5c48;
 }
 
-/* =========================
-   RESPONSIVE TABLE (mobiel)
-========================= */
+a:hover {
+  text-decoration: underline;
+}
+
+/* RESPONSIVE TABLE */
 @media (max-width: 640px) {
   th:nth-child(2),
   th:nth-child(3),
@@ -619,119 +734,4 @@ a.doc-link:focus-visible,
     height: 520px;
   }
 }
-
-/* =========================
-   TTS in NAV (bovenbalk)
-========================= */
-
-.nav-tools {
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-}
-
-.tts-toggle,
-.tts-toggle:visited {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.55rem 1.15rem;
-  border-radius: 999px;
-  border: 1px solid rgba(106, 142, 121, 0.25);
-  background: rgba(106, 142, 121, 0.08);
-  color: var(--color-text);
-  text-decoration: none;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.tts-toggle:hover {
-  background: rgba(106, 142, 121, 0.18);
-  border-color: rgba(106, 142, 121, 0.45);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.tts-panel {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  min-width: 260px;
-  padding: 0.9rem;
-  background: #ffffff;
-  border: 1px solid rgba(106, 142, 121, 0.25);
-  border-radius: 16px;
-  box-shadow: var(--shadow-soft);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-  z-index: 1500;
-}
-
-.tts-label {
-  grid-column: 1 / -1;
-  font-size: 0.85rem;
-  color: var(--color-muted);
-}
-
-#ttsRate {
-  grid-column: 1 / -1;
-  width: 100%;
-}
-
-.tts-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.55rem 0.9rem;
-  border-radius: 999px;
-  border: 1px solid rgba(106, 142, 121, 0.25);
-  background: var(--color-primary);
-  color: #ffffff;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.tts-btn:hover {
-  background: #587565;
-}
-
-.tts-btn-secondary {
-  background: #ffffff;
-  color: var(--color-text);
-}
-
-.tts-btn-secondary:hover {
-  background: rgba(106, 142, 121, 0.08);
-}
-
-.tts-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* sr-only helper (als je deze nog niet had) */
-.sr-only {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0,0,0,0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-}
-
-/* Mobiel: maak de panel netjes breed en onder elkaar */
-@media (max-width: 768px) {
-  .tts-panel {
-    right: auto;
-    left: 0;
-    width: 100%;
-    min-width: 0;
-  }
-}
-
+```

@@ -597,4 +597,74 @@ a.doc-link:focus-visible,
   outline-offset: 3px;
 }
 
+/* =========================
+   A11Y: skip-link (niet zichtbaar, wel bij focus)
+========================= */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 2000;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 2px solid var(--color-primary);
+  color: var(--color-text);
+  text-decoration: none;
+
+  /* verbergen */
+  transform: translateY(-140%);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  outline: none;
+}
+
+/* =========================
+   Knoppen forceren zichtbaar
+   (voorkomt overschrijven door algemene a{} regels)
+========================= */
+
+/* locatie-worden knop */
+a.nav-link.nav-link-accent,
+.nav-link-accent {
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* open-knoppen */
+a.doc-link,
+.doc-link {
+  display: inline-block !important;
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  border: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+a.doc-link:visited {
+  color: #ffffff !important;
+}
+
+a.doc-link:hover,
+a.nav-link.nav-link-accent:hover {
+  background: #587565 !important;
+}
+
+/* Als je ergens per ongeluk alle svg's transparant hebt gemaakt */
+.nav-icon svg {
+  fill: currentColor;
+  opacity: 1;
+}
 

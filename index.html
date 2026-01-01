@@ -1,3 +1,4 @@
+```html
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="nl">
@@ -15,481 +16,409 @@
 
 <body id="top">
 
-<!-- Skip link (toetsenbord + screenreader) -->
-<a class="skip-link" href="#protocollen">Sla navigatie over</a>
+  <!-- Skip link (toetsenbord + screenreader) -->
+  <a class="skip-link" href="#protocollen">Sla navigatie over</a>
 
-<header>
-  <div class="nav-inner">
+  <header>
+    <div class="nav-inner">
 
-    <!-- LOGO -->
-    <div class="logo">
-      <img src="logo.png" alt="Enkel Voet Netwerk Breda en omgeving" />
-    </div>
+      <!-- LOGO -->
+      <div class="logo">
+        <img src="logo.png" alt="Enkel Voet Netwerk Breda en omgeving" />
+      </div>
 
-    <!-- HAMBURGER KNOP (mobiel) -->
-    <button class="nav-toggle" type="button" aria-label="Navigatie openen of sluiten">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-
-    <!-- MENU HORIZONTAAL ONDER LOGO -->
-    <nav class="main-nav main-nav-centered" aria-label="Hoofdnavigatie">
-
-      <!-- Home -->
-      <a href="#top" class="nav-link">
-        <span class="nav-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M4 11L12 4l8 7v8a1 1 0 0 1-1 1h-4v-5H9v5H5a1 1 0 0 1-1-1v-8z" />
-          </svg>
-        </span>
-        <span>Home</span>
-      </a>
-
-      <!-- Protocollen -->
-      <a href="#protocollen" class="nav-link">
-        <span class="nav-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M6 3h9l3 3v15H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
-            <path d="M9 8h6M9 12h6M9 16h3" />
-          </svg>
-        </span>
-        <span>Protocollen</span>
-      </a>
-
-      <!-- Locaties -->
-      <a href="#locaties" class="nav-link">
-        <span class="nav-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2C8.7 2 6 4.7 6 8c0 4.4 4.6 9.5 5.6 10.6a0.6 0.6 0 0 0 .8 0C13.4 17.5 18 12.4 18 8c0-3.3-2.7-6-6-6z" />
-            <circle cx="12" cy="8" r="2.5" />
-          </svg>
-        </span>
-        <span>Locaties</span>
-      </a>
-
-      <!-- Locatie worden -->
-      <a href="locatie-worden.html" class="nav-link nav-link-accent">
-        <span class="nav-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 3l6 3v4c0 4.4-2.7 8.4-6 9-3.3-.6-6-4.6-6-9V6l6-3z" />
-            <path d="M10 11h4M12 9v4" />
-          </svg>
-        </span>
-        <span>Locatie worden</span>
-      </a>
-
-    </nav>
-  </div>
-</header>
-
-<main>
-
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Enkel Voet Netwerk Breda e.o.</h1>
-
-    <p>
-      Het Enkel Voet Netwerk Breda e.o. is een netwerk dat staat voor samenwerking in de regio én
-      hoogwaardige, eenduidige begeleiding.
-    </p>
-
-    <p>
-      Transparantie, samenwerking, eenduidig beleid en aandacht voor gezondheidsvaardigheden
-      zorgen voor betere begeleiding van cliënten.
-    </p>
-
-    <p>Alle protocollen zijn beschikbaar in drie niveaus:</p>
-
-    <div class="pill-row">
-      <div class="pill">1. Makkelijk leesbaar</div>
-      <div class="pill">2. Gemiddeld leesbaar</div>
-      <div class="pill">3. Complex</div>
-    </div>
-
-    <!-- Voorleesbalk (gratis) -->
-    <div class="tts-bar" aria-label="Voorleesfunctie">
-      <button type="button" class="tts-btn" id="ttsPlay">Lees deze pagina voor</button>
-      <button type="button" class="tts-btn tts-btn-secondary" id="ttsStop" disabled>Stop</button>
-
-      <label class="tts-label" for="ttsRate">Snelheid</label>
-      <input id="ttsRate" type="range" min="0.8" max="1.3" step="0.1" value="1" />
-    </div>
-    <p class="sr-only" id="ttsStatus" aria-live="polite"></p>
-
-    <div class="primary-button-wrapper">
-      <a href="#locaties" class="primary-button">Direct naar deelnemende locaties</a>
-    </div>
-  </section>
-
-  <!-- PROTOCOL SECTIE -->
-  <h2 class="section-title" id="protocollen">Behandelprotocollen per regio van de voet</h2>
-
-  <!-- VIEWER -->
-  <section class="viewer">
-    <div class="viewer-header">
-      <h2 class="section-title small">Geselecteerd protocol</h2>
-      <button type="button" id="closeProtocolButton" class="close-protocol-button">
-        Protocol sluiten
+      <!-- HAMBURGER KNOP (mobiel) -->
+      <button class="nav-toggle" type="button" aria-label="Navigatie openen of sluiten" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
+
+      <!-- MENU -->
+      <nav class="main-nav main-nav-centered" aria-label="Hoofdnavigatie">
+
+        <a href="#top" class="nav-link">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M4 11L12 4l8 7v8a1 1 0 0 1-1 1h-4v-5H9v5H5a1 1 0 0 1-1-1v-8z" />
+            </svg>
+          </span>
+          <span>Home</span>
+        </a>
+
+        <a href="#protocollen" class="nav-link">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M6 3h9l3 3v15H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
+              <path d="M9 8h6M9 12h6M9 16h3" />
+            </svg>
+          </span>
+          <span>Protocollen</span>
+        </a>
+
+        <a href="#locaties" class="nav-link">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 2C8.7 2 6 4.7 6 8c0 4.4 4.6 9.5 5.6 10.6a0.6 0.6 0 0 0 .8 0C13.4 17.5 18 12.4 18 8c0-3.3-2.7-6-6-6z" />
+              <circle cx="12" cy="8" r="2.5" />
+            </svg>
+          </span>
+          <span>Locaties</span>
+        </a>
+
+        <a href="locatie-worden.html" class="nav-link nav-link-accent">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 3l6 3v4c0 4.4-2.7 8.4-6 9-3.3-.6-6-4.6-6-9V6l6-3z" />
+              <path d="M10 11h4M12 9v4" />
+            </svg>
+          </span>
+          <span>Locatie worden</span>
+        </a>
+
+      </nav>
     </div>
+  </header>
 
-    <p class="viewer-placeholder">
-      Kies een protocol hieronder. Het document verschijnt hier.
-    </p>
+  <main>
 
-    <!-- Status voor screenreaders -->
-    <p class="sr-only" id="viewerStatus" aria-live="polite"></p>
+    <!-- HERO -->
+    <section class="hero" aria-label="Introductie">
+      <h1>Enkel Voet Netwerk Breda e.o.</h1>
 
-    <div class="viewer-frame-wrapper">
-      <iframe id="docViewer" src="" title="Protocol viewer" loading="lazy"></iframe>
-    </div>
-  </section>
+      <p>
+        Het Enkel Voet Netwerk Breda e.o. is een netwerk dat staat voor samenwerking in de regio én
+        hoogwaardige, eenduidige begeleiding.
+      </p>
 
-  <!-- PROTOCOL ACCORDIONS -->
-  <details>
-    <summary>Enkel</summary>
-    <div class="accordion-content">
-      <p>De enkel verbindt je onderbeen en voet.</p>
+      <p>
+        Transparantie, samenwerking, eenduidig beleid en aandacht voor gezondheidsvaardigheden
+        zorgen voor betere begeleiding van cliënten.
+      </p>
+
+      <p>Alle protocollen zijn beschikbaar in drie niveaus:</p>
+
+      <div class="pill-row" aria-label="Leesniveaus protocollen">
+        <div class="pill">1. Makkelijk leesbaar</div>
+        <div class="pill">2. Gemiddeld leesbaar</div>
+        <div class="pill">3. Complex</div>
+      </div>
+
+      <!-- Voorleesbalk (gratis) -->
+      <div class="tts-bar" aria-label="Voorleesfunctie">
+        <button type="button" class="tts-btn tts-speak" id="ttsPlay">Lees deze pagina voor</button>
+        <button type="button" class="tts-btn tts-btn-secondary tts-stop" id="ttsStop" disabled>Stop</button>
+
+        <label class="tts-label" for="ttsRate">Snelheid</label>
+        <input class="tts-rate" id="ttsRate" type="range" min="0.8" max="1.3" step="0.1" value="1" />
+      </div>
+      <p class="sr-only" id="ttsStatus" aria-live="polite"></p>
+
+      <div class="primary-button-wrapper">
+        <a href="#locaties" class="primary-button">Direct naar deelnemende locaties</a>
+      </div>
+    </section>
+
+    <!-- PROTOCOL SECTIE -->
+    <h2 class="section-title" id="protocollen">Behandelprotocollen per regio van de voet</h2>
+
+    <!-- VIEWER -->
+    <section class="viewer" aria-label="Protocol viewer">
+      <div class="viewer-header">
+        <h2 class="section-title small">Geselecteerd protocol</h2>
+        <button type="button" id="closeProtocolButton" class="close-protocol-button">
+          Protocol sluiten
+        </button>
+      </div>
+
+      <p class="viewer-placeholder">
+        Kies een protocol hieronder. Het document verschijnt hier.
+      </p>
+
+      <p class="sr-only" id="viewerStatus" aria-live="polite"></p>
+
+      <div class="viewer-frame-wrapper">
+        <iframe id="docViewer" src="" title="Protocol viewer" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <!-- PROTOCOL ACCORDIONS -->
+    <details>
+      <summary>Enkel</summary>
+      <div class="accordion-content">
+        <p>De enkel verbindt je onderbeen en voet.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Protocol</th>
+              <th>Makkelijk</th>
+              <th>Gemiddeld</th>
+              <th>Complex</th>
+            </tr>
+          </thead>
+
+          <!-- 1 Tbody voor stabiliteit -->
+          <tbody>
+            <tr>
+              <td>Re-insertie buitenste enkelpees</td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1QuMaGyKeYAaXf5KoNFxuXImrVMBeJCYKqaTj0msToyY/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8/preview" href="#">Open</a></td>
+            </tr>
+
+            <tr>
+              <td>Slijtage enkel (bovenste spronggewricht)</td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/17a83ILfD2vrwR-V5UocHypKLsqkyRxaGrj9djUzbc6I/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1kbT1OlHgghzvol_uRe1JH59pFZh5elQKn8gvcRSh5bY/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1A4Ow7j8R_jrPM1sPNvFBW-jLUue0t94vPyxiBZOwpeM/preview" href="#">Open</a></td>
+            </tr>
+
+            <tr>
+              <td>Instabiele Enkel (chronische enkelverzwikking)</td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1-waQ26QCTQPaTuF32S-3HpChcrI23q2lui3gxa37ffc/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k/preview" href="#">Open</a></td>
+            </tr>
+
+            <tr>
+              <td>Enkelverzwikking (acuut)</td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1jhI7k1Qjx_WdLckj-lRt-n_Rv2Kzo6zMZnoXJvABg_U/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1iy4G6OKNtOEFEcdUAc6jTkhbqPKnfW4Ydfe1AvnGIG4/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1XWKb_X0XG5R18EsDKaRDRR2Ab9u9cK47HKnvU9TUGDc/preview" href="#">Open</a></td>
+            </tr>
+
+            <tr>
+              <td>Voorste enkel inklemming (anterieure impingement)</td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1AtT1tDkSqQJnPrOF3AEnxOjABBZjVseL5B_XNorsFu8/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1e6lSiX1r5z6kkwPWDxt9e1Bh59o7chy-485jWbUmrSY/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1Xes-hfreQQpssqgf5-54PuyXVcD0AdbXBG9caVmCGLE/preview" href="#">Open</a></td>
+            </tr>
+
+            <tr>
+              <td>Achterste enkel inklemming (posterieure impingement)</td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1ABr-B8psf7hL8rhSdmDdRe20wtcmULUZA4j-YM8YRPI/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1QVcJHBjaWavNgE1DDBAaFGmqLhWDZAx6J7CoQxJ6N6c/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/16iyIb70sGn61_iu5is4g2AX6vouvSdsMWibPNaCrtPQ/preview" href="#">Open</a></td>
+            </tr>
+
+            <tr>
+              <td>Kraakbeenletsel van de enkel (osteochondraal lesie)</td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1MKU_cTB7D5tAKPd25Gljb9vJUmJco88PPx5euux8NBE/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1QyVlzSrp3QW3IusT5CY_fj_Sz2205oVCTu18vm_1uJk/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1buFDIWPlnzmHzu6_AL9t28jwbJdix9vPK0iVpyWmYbQ/preview" href="#">Open</a></td>
+            </tr>
+
+            <tr>
+              <td>Gewrichtsmuis enkel (corpus liberum)</td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1K0VFCWIXXKayi7d1N0zWfljljHT4dgNL81jnGE5xmR8/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1qct6cFPTso-oj1v74eMv5UILTJ273uv6Bj9LlkIXtW0/preview" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1KU9ShZX0VKu7lHNe09TdH31iC7kZi6_eugs7umfffeU/preview" href="#">Open</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary>Achtervoet</summary>
+      <div class="accordion-content">
+        <p>De achtervoet bestaat uit het hielbeen en sprongbeen.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Protocol</th>
+              <th>Makkelijk</th>
+              <th>Gemiddeld</th>
+              <th>Complex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Voorbeeldprotocol achtervoet</td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary>Middenvoet</summary>
+      <div class="accordion-content">
+        <p>De middenvoet zorgt voor stabiliteit en afrollen.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Protocol</th>
+              <th>Makkelijk</th>
+              <th>Gemiddeld</th>
+              <th>Complex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Voorbeeldprotocol middenvoet</td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary>Voorvoet</summary>
+      <div class="accordion-content">
+        <p>De voorvoet stuurt balans en afzet.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Protocol</th>
+              <th>Makkelijk</th>
+              <th>Gemiddeld</th>
+              <th>Complex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Voorbeeldprotocol voorvoet</td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+              <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <!-- LOCATIES -->
+    <section class="map-card" id="locaties">
+      <h2 class="section-title small">Deelnemende praktijken</h2>
+
+      <p>Onderstaand kaartje toont de deelnemende praktijken binnen het netwerk.</p>
+
+      <!-- Discipline filters -->
+      <div class="discipline-filters">
+        <span>Toon disciplines:</span>
+
+        <label class="discipline-filter-label">
+          <input type="checkbox" value="Fysiotherapeut" checked />
+          Fysiotherapeut
+        </label>
+
+        <label class="discipline-filter-label">
+          <input type="checkbox" value="Pedicure" checked />
+          Pedicure
+        </label>
+
+        <label class="discipline-filter-label">
+          <input type="checkbox" value="Podotherapeut" checked />
+          Podotherapeut
+        </label>
+
+        <label class="discipline-filter-label">
+          <input type="checkbox" value="Orthopedisch schoenmaker" checked />
+          Orthopedisch schoenmaker
+        </label>
+      </div>
+
+      <div id="praktijkMap" aria-label="Kaart met deelnemende praktijken"></div>
 
       <table>
         <thead>
           <tr>
-            <th>Protocol</th>
-            <th>Makkelijk</th>
-            <th>Gemiddeld</th>
-            <th>Complex</th>
+            <th>Organisatie</th>
+            <th>Locatie</th>
+            <th>Discipline</th>
+            <th>Contact</th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td>Re-insertie buitenste enkelpees</td>
+            <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
+            <td>Industriekade 10, 4815 HD Breda (Belcrum)</td>
+            <td>Fysiotherapeut</td>
             <td>
-              <a
-                class="doc-link"
-                data-doc-url="https://docs.google.com/document/d/1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8/preview"
-                href="#"
-              >Open</a>
+              E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
+              T: <a href="tel:+31765810491">076-5810491</a>
             </td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1QuMaGyKeYAaXf5KoNFxuXImrVMBeJCYKqaTj0msToyY/preview" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8/preview" href="#">Open</a></td>
           </tr>
-        </tbody>
 
-        <tbody>
           <tr>
-            <td>Slijtage enkel (bovenste spronggewricht)</td>
+            <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
+            <td>Burgemeester Middelaerlaan 1, 4835 EK Breda (Ginneken)</td>
+            <td>Fysiotherapeut</td>
             <td>
-              <a
-                class="doc-link"
-                data-doc-url="https://docs.google.com/document/d/17a83ILfD2vrwR-V5UocHypKLsqkyRxaGrj9djUzbc6I/preview"
-                href="#"
-              >Open</a>
+              E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
+              T: <a href="tel:+31765810491">076-5810491</a>
             </td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1kbT1OlHgghzvol_uRe1JH59pFZh5elQKn8gvcRSh5bY/preview" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1A4Ow7j8R_jrPM1sPNvFBW-jLUue0t94vPyxiBZOwpeM/preview" href="#">Open</a></td>
           </tr>
-        </tbody>
 
-        <tbody>
           <tr>
-            <td>Instabiele Enkel (chronische enkelverzwikking)</td>
+            <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
+            <td>Bernard de Wildestraat 400A, 4827 EG Breda</td>
+            <td>Fysiotherapeut</td>
             <td>
-              <a
-                class="doc-link"
-                data-doc-url="https://docs.google.com/document/d/1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k/preview"
-                href="#"
-              >Open</a>
+              E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
+              T: <a href="tel:+31765810491">076-5810491</a>
             </td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1-waQ26QCTQPaTuF32S-3HpChcrI23q2lui3gxa37ffc/preview" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k/preview" href="#">Open</a></td>
           </tr>
-        </tbody>
 
-        <tbody>
           <tr>
-            <td>Enkelverzwikking (acuut)</td>
+            <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
+            <td>Hondsdonk 58, Breda</td>
+            <td>Fysiotherapeut</td>
             <td>
-              <a
-                class="doc-link"
-                data-doc-url="https://docs.google.com/document/d/1jhI7k1Qjx_WdLckj-lRt-n_Rv2Kzo6zMZnoXJvABg_U/preview"
-                href="#"
-              >Open</a>
+              E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
+              T: <a href="tel:+31765810491">076-5810491</a>
             </td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1iy4G6OKNtOEFEcdUAc6jTkhbqPKnfW4Ydfe1AvnGIG4/preview" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1XWKb_X0XG5R18EsDKaRDRR2Ab9u9cK47HKnvU9TUGDc/preview" href="#">Open</a></td>
           </tr>
-        </tbody>
 
-        <tbody>
           <tr>
-            <td>Voorste enkel inklemming (anterieure impingement)</td>
+            <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
+            <td>Merijntje Gijzenstraat 3e, Oosterhout</td>
+            <td>Fysiotherapeut</td>
             <td>
-              <a
-                class="doc-link"
-                data-doc-url="https://docs.google.com/document/d/1AtT1tDkSqQJnPrOF3AEnxOjABBZjVseL5B_XNorsFu8/preview"
-                href="#"
-              >Open</a>
+              E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
+              T: <a href="tel:+31765810491">076-5810491</a>
             </td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1e6lSiX1r5z6kkwPWDxt9e1Bh59o7chy-485jWbUmrSY/preview" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1Xes-hfreQQpssqgf5-54PuyXVcD0AdbXBG9caVmCGLE/preview" href="#">Open</a></td>
           </tr>
-        </tbody>
 
-        <tbody>
           <tr>
-            <td>Achterste enkel inklemming (posterieure impingement)</td>
+            <td><a href="https://www.podotherapie-alewijnse.nl/">Alewijnse Podotherapie</a></td>
+            <td>Industriekade 10, 4815 HD Breda (Belcrum)</td>
+            <td>Podotherapeut</td>
             <td>
-              <a
-                class="doc-link"
-                data-doc-url="https://docs.google.com/document/d/1ABr-B8psf7hL8rhSdmDdRe20wtcmULUZA4j-YM8YRPI/preview"
-                href="#"
-              >Open</a>
+              E: <a href="mailto:info@podotherapie-alewijnse.nl">info@podotherapie-alewijnse.nl</a><br />
+              T: <a href="tel:+31768200327">076-8200327</a>
             </td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1QVcJHBjaWavNgE1DDBAaFGmqLhWDZAx6J7CoQxJ6N6c/preview" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/16iyIb70sGn61_iu5is4g2AX6vouvSdsMWibPNaCrtPQ/preview" href="#">Open</a></td>
           </tr>
-        </tbody>
 
-        <tbody>
-          <tr>
-            <td>Kraakbeenletsel van de enkel (osteochondraal lesie)</td>
-            <td>
-              <a
-                class="doc-link"
-                data-doc-url="https://docs.google.com/document/d/1MKU_cTB7D5tAKPd25Gljb9vJUmJco88PPx5euux8NBE/preview"
-                href="#"
-              >Open</a>
-            </td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1QyVlzSrp3QW3IusT5CY_fj_Sz2205oVCTu18vm_1uJk/preview" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1buFDIWPlnzmHzu6_AL9t28jwbJdix9vPK0iVpyWmYbQ/preview" href="#">Open</a></td>
-          </tr>
-        </tbody>
-
-        <tbody>
-          <tr>
-            <td>Gewrichtsmuis enkel (corpus liberum)</td>
-            <td>
-              <a
-                class="doc-link"
-                data-doc-url="https://docs.google.com/document/d/1K0VFCWIXXKayi7d1N0zWfljljHT4dgNL81jnGE5xmR8/preview"
-                href="#"
-              >Open</a>
-            </td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1qct6cFPTso-oj1v74eMv5UILTJ273uv6Bj9LlkIXtW0/preview" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="https://docs.google.com/document/d/1KU9ShZX0VKu7lHNe09TdH31iC7kZi6_eugs7umfffeU/preview" href="#">Open</a></td>
-          </tr>
         </tbody>
 
       </table>
-    </div>
-  </details>
+    </section>
 
-  <details>
-    <summary>Achtervoet</summary>
-    <div class="accordion-content">
-      <p>De achtervoet bestaat uit het hielbeen en sprongbeen.</p>
+  </main>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Protocol</th>
-            <th>Makkelijk</th>
-            <th>Gemiddeld</th>
-            <th>Complex</th>
-          </tr>
-        </thead>
+  <footer>
+    Enkel Voet Netwerk Breda e.o. – samenwerking voor hoogwaardige enkel- en voetzorg.
+  </footer>
 
-        <tbody>
-          <tr>
-            <td>Voorbeeldprotocol achtervoet</td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-          </tr>
-        </tbody>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-      </table>
-    </div>
-  </details>
-
-  <details>
-    <summary>Middenvoet</summary>
-    <div class="accordion-content">
-      <p>De middenvoet zorgt voor stabiliteit en afrollen.</p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Protocol</th>
-            <th>Makkelijk</th>
-            <th>Gemiddeld</th>
-            <th>Complex</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Voorbeeldprotocol middenvoet</td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-          </tr>
-        </tbody>
-
-      </table>
-    </div>
-  </details>
-
-  <details>
-    <summary>Voorvoet</summary>
-    <div class="accordion-content">
-      <p>De voorvoet stuurt balans en afzet.</p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Protocol</th>
-            <th>Makkelijk</th>
-            <th>Gemiddeld</th>
-            <th>Complex</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Voorbeeldprotocol voorvoet</td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-            <td><a class="doc-link" data-doc-url="#" href="#">Open</a></td>
-          </tr>
-        </tbody>
-
-      </table>
-    </div>
-  </details>
-
-  <!-- LOCATIES -->
-  <section class="map-card" id="locaties">
-    <h2 class="section-title small">Deelnemende praktijken</h2>
-
-    <p>Onderstaand kaartje toont de deelnemende praktijken binnen het netwerk.</p>
-
-    <!-- Discipline filters -->
-    <div class="discipline-filters">
-      <span>Toon disciplines:</span>
-
-      <label class="discipline-filter-label">
-        <input type="checkbox" value="Fysiotherapeut" checked />
-        Fysiotherapeut
-      </label>
-
-      <label class="discipline-filter-label">
-        <input type="checkbox" value="Pedicure" checked />
-        Pedicure
-      </label>
-
-      <label class="discipline-filter-label">
-        <input type="checkbox" value="Podotherapeut" checked />
-        Podotherapeut
-      </label>
-
-      <label class="discipline-filter-label">
-        <input type="checkbox" value="Orthopedisch schoenmaker" checked />
-        Orthopedisch schoenmaker
-      </label>
-    </div>
-
-    <div id="praktijkMap"></div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Organisatie</th>
-          <th>Locatie</th>
-          <th>Discipline</th>
-          <th>Contact</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Industriekade 10, 4815 HD Breda (Belcrum)</td>
-          <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Burgemeester Middelaerlaan 1, 4835 EK Breda (Ginneken)</td>
-          <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Bernard de Wildestraat 400A, 4827 EG Breda</td>
-          <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Hondsdonk 58, Breda</td>
-          <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td><a href="https://monne-zorgenbeweging.nl">Monné Zorg &amp; Beweging</a></td>
-          <td>Merijntje Gijzenstraat 3e, Oosterhout</td>
-          <td>Fysiotherapeut</td>
-          <td>
-            E: <a href="mailto:info@monne-zorgenbeweging.nl">info@monne-zorgenbeweging.nl</a><br />
-            T: <a href="tel:+31765810491">076-5810491</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td><a href="https://www.podotherapie-alewijnse.nl/">Alewijnse Podotherapie</a></td>
-          <td>Industriekade 10, 4815 HD Breda (Belcrum)</td>
-          <td>Podotherapeut</td>
-          <td>
-            E: <a href="mailto:info@podotherapie-alewijnse.nl">info@podotherapie-alewijnse.nl</a><br />
-            T: <a href="tel:+31768200327">076-8200327</a>
-          </td>
-        </tr>
-
-      </tbody>
-
-    </table>
-  </section>
-
-</main>
-
-<footer>
-  Enkel Voet Netwerk Breda e.o. – samenwerking voor hoogwaardige enkel- en voetzorg.
-</footer>
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Eigen script -->
-<script src="script.js"></script>
+  <!-- Eigen script -->
+  <script src="script.js"></script>
 
 </body>
 </html>
+```

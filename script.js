@@ -26,7 +26,7 @@
   window.addEventListener('scroll', function () {
     if (window.scrollY > 0) header.classList.add('header-scrolled');
     else header.classList.remove('header-scrolled');
-  });
+  }, { passive: true });
 })();
 
 /* ============================
@@ -191,7 +191,11 @@
       return '<div class="discipline-marker discipline-marker--' + dClass + '">' + label + '</div>';
     }).join('');
 
-    var iconHtml = '<div class="discipline-marker-group" role="img" aria-label="Disciplines">' + blocksHtml + '</div>';
+    var iconHtml =
+      '<div class="discipline-marker-group" role="img" aria-label="Disciplines">' +
+      blocksHtml +
+      '</div>';
+
     var iconWidth = (uniqueDisciplines.length * 22) + 8;
 
     var icon = L.divIcon({
@@ -239,7 +243,11 @@
         return '<div class="discipline-marker discipline-marker--' + dClass + '">' + label + '</div>';
       }).join('');
 
-      var iconHtml = '<div class="discipline-marker-group" role="img" aria-label="Disciplines">' + blocksHtml + '</div>';
+      var iconHtml =
+        '<div class="discipline-marker-group" role="img" aria-label="Disciplines">' +
+        blocksHtml +
+        '</div>';
+
       var iconWidth = (activeForMarker.length * 22) + 8;
 
       var newIcon = L.divIcon({
@@ -262,8 +270,9 @@
 
 /* ============================
    VOORLEZEN (Web Speech API)
-   - Toggle in nav
+   - Dropdown toggle in nav
    Verwacht:
+   - #ttsWrap (optioneel, maar aanbevolen)
    - #ttsToggle
    - #ttsPanel
    - #ttsPlay
@@ -272,6 +281,7 @@
    - #ttsStatus (optioneel)
 ============================ */
 (function () {
+  var wrap = document.getElementById('ttsWrap'); // optioneel (voor mouseleave)
   var toggle = document.getElementById('ttsToggle');
   var panel = document.getElementById('ttsPanel');
   var playBtn = document.getElementById('ttsPlay');
@@ -295,6 +305,14 @@
     if (statusEl) statusEl.textContent = msg || '';
   }
 
+  function stopReading(silent) {
+    window.speechSynthesis.cancel();
+    currentUtterance = null;
+    stopBtn.disabled = true;
+    playBtn.disabled = false;
+    if (!silent) setStatus('Voorlezen gestopt.');
+  }
+
   function openPanel() {
     panel.hidden = false;
     toggle.setAttribute('aria-expanded', 'true');
@@ -305,7 +323,15 @@
     panel.hidden = true;
     toggle.setAttribute('aria-expanded', 'false');
     isOpen = false;
+    // Optioneel: stop voorlezen als je de dropdown sluit
+    // (haal deze regel weg als je wilt dat voorlezen doorloopt)
+    stopReading(true);
   }
+
+  // init
+  panel.hidden = true;
+  toggle.setAttribute('aria-expanded', 'false');
+  stopBtn.disabled = true;
 
   toggle.addEventListener('click', function () {
     if (isOpen) closePanel();
@@ -325,12 +351,20 @@
     if (e.key === 'Escape') closePanel();
   });
 
-  // DIT IS DE "EERDER GENOEMDE" AANPASSING:
-  // Bij scrollen panel sluiten (voorkomt dat hij over content blijft zweven)
+  // EERDER GENOEMDE AANPASSING:
+  // Bij scrollen panel sluiten
   window.addEventListener('scroll', function () {
     if (!isOpen) return;
     closePanel();
   }, { passive: true });
+
+  // Desktop: sluit wanneer muis de hele voorlees-wrap verlaat
+  if (wrap) {
+    wrap.addEventListener('mouseleave', function () {
+      if (!isOpen) return;
+      closePanel();
+    });
+  }
 
   function getReadableText() {
     var main = document.querySelector('main');
@@ -338,16 +372,8 @@
     return txt.replace(/\s+/g, ' ').trim();
   }
 
-  function stopReading() {
-    window.speechSynthesis.cancel();
-    currentUtterance = null;
-    stopBtn.disabled = true;
-    playBtn.disabled = false;
-    setStatus('Voorlezen gestopt.');
-  }
-
   playBtn.addEventListener('click', function () {
-    stopReading();
+    stopReading(true);
 
     var text = getReadableText();
     if (!text) return;
@@ -366,12 +392,14 @@
       stopBtn.disabled = true;
       playBtn.disabled = false;
       setStatus('Voorlezen klaar.');
+      currentUtterance = null;
     };
 
     utter.onerror = function () {
       stopBtn.disabled = true;
       playBtn.disabled = false;
       setStatus('Voorlezen kon niet starten.');
+      currentUtterance = null;
     };
 
     currentUtterance = utter;
@@ -379,9 +407,10 @@
   });
 
   stopBtn.addEventListener('click', function () {
-    stopReading();
+    stopReading(false);
   });
 
+  // Als iemand snelheid wijzigt tijdens het lezen: herstart
   rateInput.addEventListener('change', function () {
     if (!currentUtterance) return;
     playBtn.click();
@@ -390,9 +419,4 @@
   window.addEventListener('beforeunload', function () {
     window.speechSynthesis.cancel();
   });
-
-  // init state
-  stopBtn.disabled = true;
-  toggle.setAttribute('aria-expanded', 'false');
-  panel.hidden = true;
 })();

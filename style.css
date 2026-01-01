@@ -668,3 +668,71 @@ a.nav-link.nav-link-accent:hover {
   opacity: 1;
 }
 
+/* =========================
+   FIX: buttons die "wit" worden (nav-link-accent + doc-link)
+   Zet dit ONDERAAN je style.css
+========================= */
+
+/* Skip-link: niet in beeld, wel zichtbaar bij toetsenbord */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 2px solid rgba(106, 142, 121, 0.6);
+  color: var(--color-text);
+  z-index: 2000;
+}
+.skip-link:focus {
+  left: 12px;
+}
+
+/* Basis: maak nav-links altijd “button-achtig” zichtbaar */
+.nav-link,
+.nav-link:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--color-text);
+  text-decoration: none;
+  background: rgba(106, 142, 121, 0.08);
+}
+
+/* Accent knop: forceer achtergrond + tekst + iconen, ook bij visited */
+.nav-link-accent,
+.nav-link-accent:visited {
+  background: var(--color-primary) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+}
+
+/* Belangrijk: ook child-elements (span, svg) wit maken */
+.nav-link-accent * {
+  color: #ffffff !important;
+}
+.nav-link-accent svg {
+  fill: currentColor !important;
+}
+
+/* Doc-link: forceer altijd kleur + background, ook bij visited */
+.doc-link,
+.doc-link:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+/* Hover blijft hetzelfde, maar nu is default ook goed zichtbaar */
+.doc-link:hover,
+.nav-link:hover {
+  text-decoration: none;
+}
+

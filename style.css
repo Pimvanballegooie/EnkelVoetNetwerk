@@ -888,3 +888,76 @@ a.doc-link:focus-visible,
   outline: 3px solid rgba(106, 142, 121, 0.55);
   outline-offset: 3px;
 }
+
+/* =========================
+   HARD FIX: KNOPPEN NIET MEER "ONZICHTBAAR"
+   Plak dit als ALLERLAATSTE in style.css
+========================= */
+
+/* NAV LINKS: altijd zichtbaar (ook als andere CSS ze overschrijft) */
+header nav.main-nav a.nav-link,
+header nav.main-nav a.nav-link:visited,
+header nav.main-nav a.nav-link:active {
+  background: rgba(106, 142, 121, 0.08) !important;
+  border: 1px solid rgba(106, 142, 121, 0.25) !important;
+  color: var(--color-text) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  text-decoration: none !important;
+}
+
+/* Ook de inner spans en iconen */
+header nav.main-nav a.nav-link * {
+  color: inherit !important;
+}
+header nav.main-nav a.nav-link svg {
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+
+/* ACCENT (Locatie worden): altijd groen + wit */
+header nav.main-nav a.nav-link.nav-link-accent,
+header nav.main-nav a.nav-link.nav-link-accent:visited,
+header nav.main-nav a.nav-link.nav-link-accent:active {
+  background: var(--color-primary) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  text-decoration: none !important;
+}
+
+header nav.main-nav a.nav-link.nav-link-accent * {
+  color: #ffffff !important;
+}
+header nav.main-nav a.nav-link.nav-link-accent svg {
+  fill: currentColor !important;
+}
+
+/* OPEN KNOPPEN: altijd zichtbaar */
+table a.doc-link,
+table a.doc-link:visited,
+table a.doc-link:active {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  text-decoration: none !important;
+  border: 0 !important;
+}
+
+/* Hover blijft netjes */
+header nav.main-nav a.nav-link:hover {
+  background: rgba(106, 142, 121, 0.18) !important;
+  border-color: rgba(106, 142, 121, 0.45) !important;
+}
+table a.doc-link:hover {
+  background: #587565 !important;
+}
+

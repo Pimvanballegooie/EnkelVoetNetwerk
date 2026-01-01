@@ -735,3 +735,156 @@ a:hover {
   }
 }
 ```
+/* =========================
+   HARD FIX NAV + TTS DROPDOWN
+   Plak dit HELEMAAL ONDERAAN style.css
+========================= */
+
+/* 1) Nav: nooit uitrekken door vreemde children */
+.main-nav {
+  align-items: center;
+  overflow: visible;
+}
+
+.main-nav > a,
+.main-nav > .nav-tts,
+.main-nav > #ttsWrap {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+/* 2) Nav knoppen: vaste “pill” hoogte, geen gigantische ovalen */
+.nav-link,
+.nav-link:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+
+  padding: 0.55rem 1.15rem;
+  min-height: 42px;          /* belangrijk: voorkomt rare hoogte */
+  line-height: 1;            /* belangrijk: voorkomt “opblazen” */
+  white-space: nowrap;
+
+  border-radius: 999px;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  background: rgba(106, 142, 121, 0.08);
+
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+/* Icons netjes */
+.nav-icon { display: inline-flex; }
+.nav-icon svg { display: block; width: 17px; height: 17px; fill: currentColor; }
+
+/* 3) Accent knop (Locatie worden): altijd zichtbaar, ook bij visited */
+.nav-link-accent,
+.nav-link-accent:visited,
+nav.main-nav a.nav-link.nav-link-accent,
+nav.main-nav a.nav-link.nav-link-accent:visited {
+  background: var(--color-primary) !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.nav-link-accent * { color: #ffffff !important; }
+.nav-link-accent svg { fill: currentColor !important; }
+
+/* 4) Doc “Open” knoppen: altijd zichtbaar */
+a.doc-link,
+a.doc-link:visited,
+table a.doc-link,
+table a.doc-link:visited {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 72px;
+
+  padding: 0.4rem 1rem !important;
+  border-radius: 999px !important;
+
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+}
+
+/* 5) TTS wrapper + dropdown: absoluut, dus GEEN header vervorming */
+.nav-tts,
+#ttsWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hidden moet altijd werken (soms wordt hidden overschreven door andere CSS) */
+#ttsPanel[hidden] {
+  display: none !important;
+}
+
+/* Dropdown panel */
+#ttsPanel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 1500;
+
+  width: 320px;
+  padding: 12px;
+  border-radius: 16px;
+
+  background: #ffffff;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.14);
+}
+
+/* Interne layout dropdown */
+#ttsPanel .tts-panel-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#ttsPanel .tts-btn {
+  flex: 1;
+  min-height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(106, 142, 121, 0.25);
+  background: rgba(106, 142, 121, 0.10);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#ttsPanel .tts-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+#ttsPanel .tts-btn:not(:disabled):hover {
+  background: rgba(106, 142, 121, 0.18);
+}
+
+#ttsPanel .tts-label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  margin: 6px 0;
+}
+
+#ttsPanel input[type="range"] {
+  width: 100%;
+}
+
+/* 6) Focus zichtbaar */
+.nav-link:focus-visible,
+a.doc-link:focus-visible,
+#ttsPanel .tts-btn:focus-visible {
+  outline: 3px solid rgba(106, 142, 121, 0.55);
+  outline-offset: 3px;
+}

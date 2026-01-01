@@ -1,4 +1,3 @@
-```js
 /* script.js */
 
 /* ============================
@@ -25,11 +24,8 @@
   if (!header) return;
 
   window.addEventListener('scroll', function () {
-    if (window.scrollY > 0) {
-      header.classList.add('header-scrolled');
-    } else {
-      header.classList.remove('header-scrolled');
-    }
+    if (window.scrollY > 0) header.classList.add('header-scrolled');
+    else header.classList.remove('header-scrolled');
   });
 })();
 
@@ -62,7 +58,6 @@
   function bindDocLinks(root) {
     var links = root.querySelectorAll('a.doc-link[data-doc-url]');
     links.forEach(function (link) {
-      // voorkom dubbel binden
       if (link.dataset.bound === '1') return;
       link.dataset.bound = '1';
 
@@ -76,18 +71,15 @@
         placeholder.style.display = 'none';
         closeButton.classList.add('visible');
 
-        // viewer in beeld brengen (fijn voor toetsenbord/voorlezen)
         frameWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
   }
 
-  // init
   bindDocLinks(document);
 
-  // Protocol sluiten
   closeButton.addEventListener('click', function () {
-    viewer.src = "";
+    viewer.src = '';
     frameWrapper.style.display = 'none';
     placeholder.style.display = 'block';
     closeButton.classList.remove('visible');
@@ -96,9 +88,6 @@
 
 /* ============================
    KAART MET PRAKTIJKEN + FILTERS
-   - Meerdere disciplines per locatie
-   - Blokjes naast elkaar, verschillende kleuren
-   - Per discipline aan/uit binnen hetzelfde icoon
 ============================ */
 (function () {
   if (typeof L === 'undefined') return;
@@ -133,7 +122,6 @@
     return mapClass[discipline] || 'default';
   }
 
-  // ---- LOCATIES ----
   var praktijken = [
     {
       naam: 'Monné Zorg & Beweging – Belcrum (Hoofdlocatie)',
@@ -179,13 +167,10 @@
     }
   ];
 
-  // ---- GROEPEN MAKEN OP BASIS VAN LAT/LNG ----
   var groupsByLocation = {};
   praktijken.forEach(function (p) {
     var key = p.lat + ',' + p.lng;
-    if (!groupsByLocation[key]) {
-      groupsByLocation[key] = { lat: p.lat, lng: p.lng, items: [] };
-    }
+    if (!groupsByLocation[key]) groupsByLocation[key] = { lat: p.lat, lng: p.lng, items: [] };
     groupsByLocation[key].items.push(p);
   });
 
@@ -197,9 +182,7 @@
 
     var uniqueDisciplines = [];
     items.forEach(function (item) {
-      if (uniqueDisciplines.indexOf(item.discipline) === -1) {
-        uniqueDisciplines.push(item.discipline);
-      }
+      if (uniqueDisciplines.indexOf(item.discipline) === -1) uniqueDisciplines.push(item.discipline);
     });
 
     var blocksHtml = uniqueDisciplines.map(function (d) {
@@ -208,12 +191,12 @@
       return '<div class="discipline-marker discipline-marker--' + dClass + '">' + label + '</div>';
     }).join('');
 
-    var iconHtml = '<div class="discipline-marker-group">' + blocksHtml + '</div>';
+    var iconHtml = '<div class="discipline-marker-group" role="img" aria-label="Disciplines">' + blocksHtml + '</div>';
     var iconWidth = (uniqueDisciplines.length * 22) + 8;
 
     var icon = L.divIcon({
       html: iconHtml,
-      className: '',
+      className: '', // bewust leeg: we stylen via .discipline-marker*
       iconSize: [iconWidth, 26],
       iconAnchor: [iconWidth / 2, 26]
     });
@@ -231,22 +214,17 @@
     markers.push(marker);
   });
 
-  // ---- DISCIPLINE-FILTERS ----
   var checkboxes = document.querySelectorAll('.discipline-filters input[type="checkbox"]');
 
   function updateMarkers() {
     if (!checkboxes.length) return;
 
     var active = [];
-    checkboxes.forEach(function (cb) {
-      if (cb.checked) active.push(cb.value);
-    });
+    checkboxes.forEach(function (cb) { if (cb.checked) active.push(cb.value); });
     var activeSet = new Set(active);
 
     markers.forEach(function (marker) {
-      var activeForMarker = marker.disciplines.filter(function (d) {
-        return activeSet.has(d);
-      });
+      var activeForMarker = marker.disciplines.filter(function (d) { return activeSet.has(d); });
 
       if (activeForMarker.length === 0) {
         if (map.hasLayer(marker)) map.removeLayer(marker);
@@ -261,7 +239,7 @@
         return '<div class="discipline-marker discipline-marker--' + dClass + '">' + label + '</div>';
       }).join('');
 
-      var iconHtml = '<div class="discipline-marker-group">' + blocksHtml + '</div>';
+      var iconHtml = '<div class="discipline-marker-group" role="img" aria-label="Disciplines">' + blocksHtml + '</div>';
       var iconWidth = (activeForMarker.length * 22) + 8;
 
       var newIcon = L.divIcon({
@@ -281,4 +259,110 @@
 
   updateMarkers();
 })();
-```
+
+/* ============================
+   VOORLEZEN (Web Speech API)
+   Verwacht standaard:
+   - #speakPageButton
+   - #stopSpeakButton
+   - #speechRate  (input[type="range"])
+   Alternatief (als je liever classes gebruikt):
+   - .tts-speak
+   - .tts-stop
+   - .tts-rate
+============================ */
+(function () {
+  var speakBtn =
+    document.getElementById('speakPageButton') ||
+    document.querySelector('.tts-speak');
+
+  var stopBtn =
+    document.getElementById('stopSpeakButton') ||
+    document.querySelector('.tts-stop');
+
+  var rateInput =
+    document.getElementById('speechRate') ||
+    document.querySelector('.tts-rate');
+
+  // Als de knoppen niet bestaan: niets doen (pagina blijft werken)
+  if (!speakBtn || !stopBtn || !rateInput) return;
+
+  function supported() {
+    return (
+      typeof window.speechSynthesis !== 'undefined' &&
+      typeof window.SpeechSynthesisUtterance !== 'undefined'
+    );
+  }
+
+  function getReadableText() {
+    // Lees alleen de hoofdinhoud, niet de header/navigatie
+    var main = document.querySelector('main');
+    if (!main) return (document.body && document.body.innerText) ? document.body.innerText : '';
+    return main.innerText || '';
+  }
+
+  function pickDutchVoice() {
+    var voices = window.speechSynthesis.getVoices() || [];
+    // voorkeur: nl-* voice
+    var v = voices.find(function (x) {
+      return (x.lang || '').toLowerCase().indexOf('nl') === 0;
+    });
+    return v || null;
+  }
+
+  function setUi(isSpeaking) {
+    speakBtn.disabled = !!isSpeaking;
+    stopBtn.disabled = !isSpeaking;
+  }
+
+  function speakNow() {
+    if (!supported()) {
+      alert('Voorlezen wordt niet ondersteund in deze browser. Probeer Chrome, Edge of Safari.');
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    var text = (getReadableText() || '').trim();
+    if (!text) return;
+
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'nl-NL';
+
+    var rate = parseFloat(rateInput.value || '1');
+    if (isNaN(rate)) rate = 1;
+    utter.rate = Math.max(0.6, Math.min(1.4, rate));
+
+    var voice = pickDutchVoice();
+    if (voice) utter.voice = voice;
+
+    utter.onend = function () { setUi(false); };
+    utter.onerror = function () { setUi(false); };
+
+    setUi(true);
+    window.speechSynthesis.speak(utter);
+  }
+
+  // Sommige browsers laden voices pas later
+  if (supported()) {
+    window.speechSynthesis.onvoiceschanged = function () {
+      pickDutchVoice();
+    };
+  }
+
+  speakBtn.addEventListener('click', function () {
+    if (!supported()) return;
+    // "warm-up" voices (helpt in o.a. Chrome/Edge)
+    window.speechSynthesis.getVoices();
+    speakNow();
+  });
+
+  stopBtn.addEventListener('click', function () {
+    if (!supported()) return;
+    window.speechSynthesis.cancel();
+    setUi(false);
+  });
+
+  // init state
+  setUi(false);
+})();

@@ -196,7 +196,7 @@
 
     var icon = L.divIcon({
       html: iconHtml,
-      className: '', // bewust leeg: we stylen via .discipline-marker*
+      className: '',
       iconSize: [iconWidth, 26],
       iconAnchor: [iconWidth / 2, 26]
     });
@@ -262,110 +262,14 @@
 
 /* ============================
    VOORLEZEN (Web Speech API)
-   Verwacht standaard:
-   - #speakPageButton
-   - #stopSpeakButton
-   - #speechRate  (input[type="range"])
-   Alternatief (als je liever classes gebruikt):
-   - .tts-speak
-   - .tts-stop
-   - .tts-rate
-============================ */
-(function () {
-  var speakBtn =
-    document.getElementById('speakPageButton') ||
-    document.querySelector('.tts-speak');
-
-  var stopBtn =
-    document.getElementById('stopSpeakButton') ||
-    document.querySelector('.tts-stop');
-
-  var rateInput =
-    document.getElementById('speechRate') ||
-    document.querySelector('.tts-rate');
-
-  // Als de knoppen niet bestaan: niets doen (pagina blijft werken)
-  if (!speakBtn || !stopBtn || !rateInput) return;
-
-  function supported() {
-    return (
-      typeof window.speechSynthesis !== 'undefined' &&
-      typeof window.SpeechSynthesisUtterance !== 'undefined'
-    );
-  }
-
-  function getReadableText() {
-    // Lees alleen de hoofdinhoud, niet de header/navigatie
-    var main = document.querySelector('main');
-    if (!main) return (document.body && document.body.innerText) ? document.body.innerText : '';
-    return main.innerText || '';
-  }
-
-  function pickDutchVoice() {
-    var voices = window.speechSynthesis.getVoices() || [];
-    // voorkeur: nl-* voice
-    var v = voices.find(function (x) {
-      return (x.lang || '').toLowerCase().indexOf('nl') === 0;
-    });
-    return v || null;
-  }
-
-  function setUi(isSpeaking) {
-    speakBtn.disabled = !!isSpeaking;
-    stopBtn.disabled = !isSpeaking;
-  }
-
-  function speakNow() {
-    if (!supported()) {
-      alert('Voorlezen wordt niet ondersteund in deze browser. Probeer Chrome, Edge of Safari.');
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-
-    var text = (getReadableText() || '').trim();
-    if (!text) return;
-
-    var utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'nl-NL';
-
-    var rate = parseFloat(rateInput.value || '1');
-    if (isNaN(rate)) rate = 1;
-    utter.rate = Math.max(0.6, Math.min(1.4, rate));
-
-    var voice = pickDutchVoice();
-    if (voice) utter.voice = voice;
-
-    utter.onend = function () { setUi(false); };
-    utter.onerror = function () { setUi(false); };
-
-    setUi(true);
-    window.speechSynthesis.speak(utter);
-  }
-
-  // Sommige browsers laden voices pas later
-  if (supported()) {
-    window.speechSynthesis.onvoiceschanged = function () {
-      pickDutchVoice();
-    };
-  }
-
-  speakBtn.addEventListener('click', function () {
-    if (!supported()) return;
-    // "warm-up" voices (helpt in o.a. Chrome/Edge)
-    window.speechSynthesis.getVoices();
-    speakNow();
-  });
-
-  stopBtn.addEventListener('click', function () {
-    if (!supported()) return;
-    window.speechSynthesis.cancel();
-    setUi(false);
-  });
-
-/* ============================
-   VOORLEZEN (Web Speech API)
    - Toggle in nav
+   Verwacht:
+   - #ttsToggle
+   - #ttsPanel
+   - #ttsPlay
+   - #ttsStop
+   - #ttsRate
+   - #ttsStatus (optioneel)
 ============================ */
 (function () {
   var toggle = document.getElementById('ttsToggle');
@@ -377,8 +281,7 @@
 
   if (!toggle || !panel || !playBtn || !stopBtn || !rateInput) return;
 
-  // Check support
-  var supported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  var supported = ('speechSynthesis' in window) && ('SpeechSynthesisUtterance' in window);
   if (!supported) {
     toggle.disabled = true;
     toggle.textContent = 'Voorlezen niet beschikbaar';
@@ -422,15 +325,17 @@
     if (e.key === 'Escape') closePanel();
   });
 
-  function getReadableText() {
-    // Lees alleen de MAIN content (niet je menu)
-    var main = document.querySelector('main');
-    if (!main) return document.body.innerText || '';
+  // DIT IS DE "EERDER GENOEMDE" AANPASSING:
+  // Bij scrollen panel sluiten (voorkomt dat hij over content blijft zweven)
+  window.addEventListener('scroll', function () {
+    if (!isOpen) return;
+    closePanel();
+  }, { passive: true });
 
-    // Gebruik innerText om verborgen/visuele rommel te beperken
-    return main.innerText
-      .replace(/\s+/g, ' ')
-      .trim();
+  function getReadableText() {
+    var main = document.querySelector('main');
+    var txt = main ? (main.innerText || '') : (document.body.innerText || '');
+    return txt.replace(/\s+/g, ' ').trim();
   }
 
   function stopReading() {
@@ -442,7 +347,7 @@
   }
 
   playBtn.addEventListener('click', function () {
-    stopReading(); // reset lopende sessie
+    stopReading();
 
     var text = getReadableText();
     if (!text) return;
@@ -477,21 +382,17 @@
     stopReading();
   });
 
-  // Als iemand snelheid wijzigt tijdens het lezen: herstart voor consistent gedrag
   rateInput.addEventListener('change', function () {
     if (!currentUtterance) return;
-    // Herstart met nieuwe rate
     playBtn.click();
   });
 
-  // Stop bij pagina verlaten (netjes)
   window.addEventListener('beforeunload', function () {
     window.speechSynthesis.cancel();
   });
-})();
 
-
-   
   // init state
-  setUi(false);
+  stopBtn.disabled = true;
+  toggle.setAttribute('aria-expanded', 'false');
+  panel.hidden = true;
 })();

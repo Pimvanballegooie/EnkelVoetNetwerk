@@ -363,6 +363,135 @@
     setUi(false);
   });
 
+/* ============================
+   VOORLEZEN (Web Speech API)
+   - Toggle in nav
+============================ */
+(function () {
+  var toggle = document.getElementById('ttsToggle');
+  var panel = document.getElementById('ttsPanel');
+  var playBtn = document.getElementById('ttsPlay');
+  var stopBtn = document.getElementById('ttsStop');
+  var rateInput = document.getElementById('ttsRate');
+  var statusEl = document.getElementById('ttsStatus');
+
+  if (!toggle || !panel || !playBtn || !stopBtn || !rateInput) return;
+
+  // Check support
+  var supported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  if (!supported) {
+    toggle.disabled = true;
+    toggle.textContent = 'Voorlezen niet beschikbaar';
+    return;
+  }
+
+  var currentUtterance = null;
+  var isOpen = false;
+
+  function setStatus(msg) {
+    if (statusEl) statusEl.textContent = msg || '';
+  }
+
+  function openPanel() {
+    panel.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    isOpen = true;
+  }
+
+  function closePanel() {
+    panel.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+    isOpen = false;
+  }
+
+  toggle.addEventListener('click', function () {
+    if (isOpen) closePanel();
+    else openPanel();
+  });
+
+  // Klik buiten paneel sluit het
+  document.addEventListener('click', function (e) {
+    if (!isOpen) return;
+    if (panel.contains(e.target) || toggle.contains(e.target)) return;
+    closePanel();
+  });
+
+  // ESC sluit paneel
+  document.addEventListener('keydown', function (e) {
+    if (!isOpen) return;
+    if (e.key === 'Escape') closePanel();
+  });
+
+  function getReadableText() {
+    // Lees alleen de MAIN content (niet je menu)
+    var main = document.querySelector('main');
+    if (!main) return document.body.innerText || '';
+
+    // Gebruik innerText om verborgen/visuele rommel te beperken
+    return main.innerText
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function stopReading() {
+    window.speechSynthesis.cancel();
+    currentUtterance = null;
+    stopBtn.disabled = true;
+    playBtn.disabled = false;
+    setStatus('Voorlezen gestopt.');
+  }
+
+  playBtn.addEventListener('click', function () {
+    stopReading(); // reset lopende sessie
+
+    var text = getReadableText();
+    if (!text) return;
+
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'nl-NL';
+    utter.rate = parseFloat(rateInput.value) || 1;
+
+    utter.onstart = function () {
+      stopBtn.disabled = false;
+      playBtn.disabled = true;
+      setStatus('Voorlezen gestart.');
+    };
+
+    utter.onend = function () {
+      stopBtn.disabled = true;
+      playBtn.disabled = false;
+      setStatus('Voorlezen klaar.');
+    };
+
+    utter.onerror = function () {
+      stopBtn.disabled = true;
+      playBtn.disabled = false;
+      setStatus('Voorlezen kon niet starten.');
+    };
+
+    currentUtterance = utter;
+    window.speechSynthesis.speak(utter);
+  });
+
+  stopBtn.addEventListener('click', function () {
+    stopReading();
+  });
+
+  // Als iemand snelheid wijzigt tijdens het lezen: herstart voor consistent gedrag
+  rateInput.addEventListener('change', function () {
+    if (!currentUtterance) return;
+    // Herstart met nieuwe rate
+    playBtn.click();
+  });
+
+  // Stop bij pagina verlaten (netjes)
+  window.addEventListener('beforeunload', function () {
+    window.speechSynthesis.cancel();
+  });
+})();
+
+
+   
   // init state
   setUi(false);
 })();

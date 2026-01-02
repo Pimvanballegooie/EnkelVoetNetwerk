@@ -731,4 +731,30 @@ a:hover {
   100% { transform: scale(1); opacity: 1; }
 }
 
+  /* =========================
+   VOORLEZEN: ACTIEVE STATUS
+   (plak ALS ALLERLAATSTE)
+========================= */
+
+/* Als voorlezen actief is */
+.tts-toggle.is-speaking {
+  background: rgba(106, 142, 121, 0.18) !important;
+  border-color: rgba(106, 142, 121, 0.55) !important;
+  box-shadow: 0 0 0 3px rgba(106, 142, 121, 0.25);
+}
+
+/* Icoon en tekst blijven netjes */
+.tts-toggle.is-speaking,
+.tts-toggle.is-speaking span,
+.tts-toggle.is-speaking svg {
+  color: var(--color-text) !important;
+  fill: currentColor !important;
+}
+
+/* Hover blijft gewoon werken */
+.tts-toggle.is-speaking:hover {
+  background: rgba(106, 142, 121, 0.22) !important;
+}
+
+
 }

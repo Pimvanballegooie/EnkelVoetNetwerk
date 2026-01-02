@@ -383,17 +383,18 @@
     utter.rate = parseFloat(rateInput.value) || 1;
 
     utter.onstart = function () {
-      stopBtn.disabled = false;
-      playBtn.disabled = true;
-      setStatus('Voorlezen gestart.');
-    };
+  stopBtn.disabled = false;
+  playBtn.disabled = true;
+  toggle.classList.add('is-speaking');
+  setStatus('Voorlezen gestart.');
+};
 
     utter.onend = function () {
-      stopBtn.disabled = true;
-      playBtn.disabled = false;
-      setStatus('Voorlezen klaar.');
-      currentUtterance = null;
-    };
+  stopBtn.disabled = true;
+  playBtn.disabled = false;
+  toggle.classList.remove('is-speaking');
+  setStatus('Voorlezen klaar.');
+};
 
     utter.onerror = function () {
       stopBtn.disabled = true;

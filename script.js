@@ -271,14 +271,6 @@
 /* ============================
    VOORLEZEN (Web Speech API)
    - Dropdown toggle in nav
-   Verwacht:
-   - #ttsWrap (optioneel, maar aanbevolen)
-   - #ttsToggle
-   - #ttsPanel
-   - #ttsPlay
-   - #ttsStop
-   - #ttsRate
-   - #ttsStatus (optioneel)
 ============================ */
 (function () {
   var wrap = document.getElementById('ttsWrap'); // optioneel (voor mouseleave)
@@ -305,14 +297,17 @@
     if (statusEl) statusEl.textContent = msg || '';
   }
 
-  function stopReading() {
-  window.speechSynthesis.cancel();
-  currentUtterance = null;
-  stopBtn.disabled = true;
-  playBtn.disabled = false;
-  toggle.classList.remove('is-speaking'); // ← DEZE REGEL
-  setStatus('Voorlezen gestopt.');
-}
+  // silent = true => geen status-tekst (handig bij reset)
+  function stopReading(silent) {
+    window.speechSynthesis.cancel();
+    currentUtterance = null;
+
+    stopBtn.disabled = true;
+    playBtn.disabled = false;
+
+    toggle.classList.remove('is-speaking');
+    if (!silent) setStatus('Voorlezen gestopt.');
+  }
 
   function openPanel() {
     panel.hidden = false;
@@ -324,9 +319,9 @@
     panel.hidden = true;
     toggle.setAttribute('aria-expanded', 'false');
     isOpen = false;
-    // Optioneel: stop voorlezen als je de dropdown sluit
-    // (haal deze regel weg als je wilt dat voorlezen doorloopt)
-    stopReading(true);
+
+    // Belangrijk: NIET automatisch stoppen met voorlezen bij sluiten.
+    // Als je dat wél wilt: zet hier "stopReading(true);"
   }
 
   // init
@@ -352,7 +347,6 @@
     if (e.key === 'Escape') closePanel();
   });
 
-  // EERDER GENOEMDE AANPASSING:
   // Bij scrollen panel sluiten
   window.addEventListener('scroll', function () {
     if (!isOpen) return;
@@ -374,6 +368,7 @@
   }
 
   playBtn.addEventListener('click', function () {
+    // silent reset, zodat je niet steeds "gestopt" meldt bij opnieuw starten
     stopReading(true);
 
     var text = getReadableText();
@@ -384,24 +379,24 @@
     utter.rate = parseFloat(rateInput.value) || 1;
 
     utter.onstart = function () {
-  stopBtn.disabled = false;
-  playBtn.disabled = true;
-  toggle.classList.add('is-speaking');
-  setStatus('Voorlezen gestart.');
-};
-
+      stopBtn.disabled = false;
+      playBtn.disabled = true;
+      toggle.classList.add('is-speaking');
+      setStatus('Voorlezen gestart.');
+    };
 
     utter.onend = function () {
-  stopBtn.disabled = true;
-  playBtn.disabled = false;
-  toggle.classList.remove('is-speaking');
-  setStatus('Voorlezen klaar.');
-};
-
+      stopBtn.disabled = true;
+      playBtn.disabled = false;
+      toggle.classList.remove('is-speaking');
+      setStatus('Voorlezen klaar.');
+      currentUtterance = null;
+    };
 
     utter.onerror = function () {
       stopBtn.disabled = true;
       playBtn.disabled = false;
+      toggle.classList.remove('is-speaking');
       setStatus('Voorlezen kon niet starten.');
       currentUtterance = null;
     };
@@ -414,7 +409,7 @@
     stopReading(false);
   });
 
-  // Als iemand snelheid wijzigt tijdens het lezen: herstart
+  // Snelheid wijzigen tijdens lezen: herstart
   rateInput.addEventListener('change', function () {
     if (!currentUtterance) return;
     playBtn.click();
@@ -424,3 +419,4 @@
     window.speechSynthesis.cancel();
   });
 })();
+

@@ -305,13 +305,14 @@
     if (statusEl) statusEl.textContent = msg || '';
   }
 
-  function stopReading(silent) {
-    window.speechSynthesis.cancel();
-    currentUtterance = null;
-    stopBtn.disabled = true;
-    playBtn.disabled = false;
-    if (!silent) setStatus('Voorlezen gestopt.');
-  }
+  function stopReading() {
+  window.speechSynthesis.cancel();
+  currentUtterance = null;
+  stopBtn.disabled = true;
+  playBtn.disabled = false;
+  toggle.classList.remove('is-speaking');
+  setStatus('Voorlezen gestopt.');
+}
 
   function openPanel() {
     panel.hidden = false;

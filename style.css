@@ -720,5 +720,15 @@ a:hover {
   50%  { transform: scale(1.15); opacity: 0.7; }
   100% { transform: scale(1);   opacity: 1; }
 }
+/* TTS icoon pulseert tijdens voorlezen */
+.tts-toggle.is-speaking .nav-icon svg {
+  animation: tts-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes tts-pulse {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.15); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
 
 }

@@ -310,7 +310,7 @@
   currentUtterance = null;
   stopBtn.disabled = true;
   playBtn.disabled = false;
-  toggle.classList.remove('is-speaking');
+  toggle.classList.remove('is-speaking'); // ← DEZE REGEL
   setStatus('Voorlezen gestopt.');
 }
 
@@ -390,12 +390,14 @@
   setStatus('Voorlezen gestart.');
 };
 
+
     utter.onend = function () {
   stopBtn.disabled = true;
   playBtn.disabled = false;
   toggle.classList.remove('is-speaking');
   setStatus('Voorlezen klaar.');
 };
+
 
     utter.onerror = function () {
       stopBtn.disabled = true;

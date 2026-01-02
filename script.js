@@ -271,146 +271,155 @@
 /* ============================
    VOORLEZEN (Web Speech API)
    - Dropdown toggle in nav
+   Verwacht:
+   - #ttsWrap (optioneel)
+   - #ttsToggle
+   - #ttsPanel
+   - #ttsPlay
+   - #ttsStop
+   - #ttsRate
+   - #ttsStatus (optioneel)
 ============================ */
 (function () {
-  var wrap = document.getElementById('ttsWrap'); // optioneel (voor mouseleave)
-  var toggle = document.getElementById('ttsToggle');
-  var panel = document.getElementById('ttsPanel');
-  var playBtn = document.getElementById('ttsPlay');
-  var stopBtn = document.getElementById('ttsStop');
-  var rateInput = document.getElementById('ttsRate');
-  var statusEl = document.getElementById('ttsStatus');
+  function initTTS() {
+    var wrap = document.getElementById('ttsWrap');
+    var toggle = document.getElementById('ttsToggle');
+    var panel = document.getElementById('ttsPanel');
+    var playBtn = document.getElementById('ttsPlay');
+    var stopBtn = document.getElementById('ttsStop');
+    var rateInput = document.getElementById('ttsRate');
+    var statusEl = document.getElementById('ttsStatus');
 
-  if (!toggle || !panel || !playBtn || !stopBtn || !rateInput) return;
+    if (!toggle || !panel || !playBtn || !stopBtn || !rateInput) return;
 
-  var supported = ('speechSynthesis' in window) && ('SpeechSynthesisUtterance' in window);
-  if (!supported) {
-    toggle.disabled = true;
-    toggle.textContent = 'Voorlezen niet beschikbaar';
-    return;
-  }
+    var supported = ('speechSynthesis' in window) && ('SpeechSynthesisUtterance' in window);
+    if (!supported) {
+      toggle.disabled = true;
+      toggle.textContent = 'Voorlezen niet beschikbaar';
+      return;
+    }
 
-  var currentUtterance = null;
-  var isOpen = false;
+    var currentUtterance = null;
+    var isOpen = false;
 
-  function setStatus(msg) {
-    if (statusEl) statusEl.textContent = msg || '';
-  }
+    function setStatus(msg) {
+      if (statusEl) statusEl.textContent = msg || '';
+    }
 
-  // silent = true => geen status-tekst (handig bij reset)
-  function stopReading(silent) {
-    window.speechSynthesis.cancel();
-    currentUtterance = null;
+    function openPanel() {
+      panel.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+      isOpen = true;
+    }
 
-    stopBtn.disabled = true;
-    playBtn.disabled = false;
+    function closePanel() {
+      panel.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      isOpen = false;
+    }
 
-    toggle.classList.remove('is-speaking');
-    if (!silent) setStatus('Voorlezen gestopt.');
-  }
+    function stopReading() {
+      window.speechSynthesis.cancel();
+      currentUtterance = null;
+      stopBtn.disabled = true;
+      playBtn.disabled = false;
+      toggle.classList.remove('is-speaking');
+      setStatus('Voorlezen gestopt.');
+    }
 
-  function openPanel() {
-    panel.hidden = false;
-    toggle.setAttribute('aria-expanded', 'true');
-    isOpen = true;
-  }
+    function getReadableText() {
+      var main = document.querySelector('main');
+      var txt = main ? (main.innerText || '') : (document.body.innerText || '');
+      return txt.replace(/\s+/g, ' ').trim();
+    }
 
-  function closePanel() {
+    // init state
     panel.hidden = true;
     toggle.setAttribute('aria-expanded', 'false');
-    isOpen = false;
+    stopBtn.disabled = true;
 
-    // Belangrijk: NIET automatisch stoppen met voorlezen bij sluiten.
-    // Als je dat wél wilt: zet hier "stopReading(true);"
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (isOpen) closePanel();
+      else openPanel();
+    });
+
+    // Klik buiten paneel sluit het
+    document.addEventListener('click', function (e) {
+      if (!isOpen) return;
+      if (panel.contains(e.target) || toggle.contains(e.target)) return;
+      closePanel();
+    });
+
+    // ESC sluit paneel
+    document.addEventListener('keydown', function (e) {
+      if (!isOpen) return;
+      if (e.key === 'Escape') closePanel();
+    });
+
+    // Bij scrollen panel sluiten
+    window.addEventListener('scroll', function () {
+      if (!isOpen) return;
+      closePanel();
+    }, { passive: true });
+
+    // Belangrijk: NIET op mouseleave sluiten (dat veroorzaakt jouw “ik kan niet naar Start/slider” probleem)
+    // Dus bewust GEEN wrap.addEventListener('mouseleave', ...)
+
+    playBtn.addEventListener('click', function () {
+      stopReading();
+
+      var text = getReadableText();
+      if (!text) return;
+
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'nl-NL';
+      utter.rate = parseFloat(rateInput.value) || 1;
+
+      utter.onstart = function () {
+        stopBtn.disabled = false;
+        playBtn.disabled = true;
+        toggle.classList.add('is-speaking');
+        setStatus('Voorlezen gestart.');
+      };
+
+      utter.onend = function () {
+        stopBtn.disabled = true;
+        playBtn.disabled = false;
+        toggle.classList.remove('is-speaking');
+        setStatus('Voorlezen klaar.');
+        currentUtterance = null;
+      };
+
+      utter.onerror = function () {
+        stopBtn.disabled = true;
+        playBtn.disabled = false;
+        toggle.classList.remove('is-speaking');
+        setStatus('Voorlezen kon niet starten.');
+        currentUtterance = null;
+      };
+
+      currentUtterance = utter;
+      window.speechSynthesis.speak(utter);
+    });
+
+    stopBtn.addEventListener('click', function () {
+      stopReading();
+    });
+
+    rateInput.addEventListener('change', function () {
+      if (!currentUtterance) return;
+      playBtn.click();
+    });
+
+    window.addEventListener('beforeunload', function () {
+      window.speechSynthesis.cancel();
+    });
   }
 
-  // init
-  panel.hidden = true;
-  toggle.setAttribute('aria-expanded', 'false');
-  stopBtn.disabled = true;
-
-  toggle.addEventListener('click', function () {
-    if (isOpen) closePanel();
-    else openPanel();
-  });
-
-  // Klik buiten paneel sluit het
-  document.addEventListener('click', function (e) {
-    if (!isOpen) return;
-    if (panel.contains(e.target) || toggle.contains(e.target)) return;
-    closePanel();
-  });
-
-  // ESC sluit paneel
-  document.addEventListener('keydown', function (e) {
-    if (!isOpen) return;
-    if (e.key === 'Escape') closePanel();
-  });
-
-  // Bij scrollen panel sluiten
-  window.addEventListener('scroll', function () {
-    if (!isOpen) return;
-    closePanel();
-  }, { passive: true });
-
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTTS);
+  } else {
+    initTTS();
   }
-
-  function getReadableText() {
-    var main = document.querySelector('main');
-    var txt = main ? (main.innerText || '') : (document.body.innerText || '');
-    return txt.replace(/\s+/g, ' ').trim();
-  }
-
-  playBtn.addEventListener('click', function () {
-    // silent reset, zodat je niet steeds "gestopt" meldt bij opnieuw starten
-    stopReading(true);
-
-    var text = getReadableText();
-    if (!text) return;
-
-    var utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'nl-NL';
-    utter.rate = parseFloat(rateInput.value) || 1;
-
-    utter.onstart = function () {
-      stopBtn.disabled = false;
-      playBtn.disabled = true;
-      toggle.classList.add('is-speaking');
-      setStatus('Voorlezen gestart.');
-    };
-
-    utter.onend = function () {
-      stopBtn.disabled = true;
-      playBtn.disabled = false;
-      toggle.classList.remove('is-speaking');
-      setStatus('Voorlezen klaar.');
-      currentUtterance = null;
-    };
-
-    utter.onerror = function () {
-      stopBtn.disabled = true;
-      playBtn.disabled = false;
-      toggle.classList.remove('is-speaking');
-      setStatus('Voorlezen kon niet starten.');
-      currentUtterance = null;
-    };
-
-    currentUtterance = utter;
-    window.speechSynthesis.speak(utter);
-  });
-
-  stopBtn.addEventListener('click', function () {
-    stopReading(false);
-  });
-
-  // Snelheid wijzigen tijdens lezen: herstart
-  rateInput.addEventListener('change', function () {
-    if (!currentUtterance) return;
-    playBtn.click();
-  });
-
-  window.addEventListener('beforeunload', function () {
-    window.speechSynthesis.cancel();
-  });
 })();
-

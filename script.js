@@ -353,12 +353,6 @@
     closePanel();
   }, { passive: true });
 
-  // Desktop: sluit wanneer muis de hele voorlees-wrap verlaat
-  if (wrap) {
-    wrap.addEventListener('mouseleave', function () {
-      if (!isOpen) return;
-      closePanel();
-    });
   }
 
   function getReadableText() {
